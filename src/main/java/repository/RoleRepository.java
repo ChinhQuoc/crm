@@ -23,7 +23,6 @@ public class RoleRepository {
 			PreparedStatement statement = connection.prepareStatement(query);
 			
 			count = statement.executeUpdate();
-			return count;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Lỗi thêm role " + e.getLocalizedMessage());

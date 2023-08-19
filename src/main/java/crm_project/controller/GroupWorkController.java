@@ -18,9 +18,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import config.MySqlConfig;
 import entity.Project;
+import service.GroupWorkService;
 
 @WebServlet(name = "groupWorkController", urlPatterns = {"/groupwork-add", "/groupwork"})
 public class GroupWorkController extends HttpServlet{
+	private GroupWorkService groupWorkService = new GroupWorkService();
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path = req.getServletPath();
@@ -30,12 +33,7 @@ public class GroupWorkController extends HttpServlet{
 		} else if (path.equals("/groupwork")) {
 			List<Project> projects = new ArrayList<Project>();
 			
-			try {
-				projects = getAllProject();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			projects = groupWorkService.getAllProject();
 			
 			req.setAttribute("projects", projects);
 			req.getRequestDispatcher("groupwork.jsp").forward(req, resp);
@@ -48,54 +46,10 @@ public class GroupWorkController extends HttpServlet{
 		String startDate = formatDate(req.getParameter("startDate"));
 		String endDate = formatDate(req.getParameter("endDate"));
 		
-		String query = "INSERT INTO Project(name, startDate, endDate) VALUES('"+ name +"', '"+ startDate +"', '"+ endDate +"')";
+		boolean isSuccess = groupWorkService.addProject(name, startDate, endDate);
 		
-		Connection connection = MySqlConfig.getConnection();
-		boolean isSuccess = false;
-		
-		try {
-			PreparedStatement statement = connection.prepareStatement(query);
-			int count = statement.executeUpdate();
-			
-			if (count > 0) {
-				isSuccess = true;
-			}
-			
-			req.setAttribute("isSuccess", isSuccess);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
+		req.setAttribute("isSuccess", isSuccess);
 		req.getRequestDispatcher("groupwork-add.jsp").forward(req, resp);
-	}
-	
-	private List<Project> getAllProject() throws SQLException {
-		String query = "SELECT * FROM Project";
-		
-		Connection connection = MySqlConfig.getConnection();
-		PreparedStatement statement = connection.prepareStatement(query);
-		ResultSet result = statement.executeQuery(query);
-		
-		List<Project> projects = new ArrayList<Project>();
-		
-		while (result.next()) {
-			Project project = new Project();
-			project.setName(result.getString("name"));
-			project.setStartDate(result.getDate("startDate"));
-			project.setEndDate(result.getDate("endDate"));
-			
-			projects.add(project);
-		}
-		
-		return projects;
 	}
 	
 	private String formatDate(String dateString){

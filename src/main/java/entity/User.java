@@ -1,11 +1,40 @@
 package entity;
 
 // entity: là nơi khai báo ra các class đặt tên và thuộc tính giống với lại tên bảng trong BD
+// Nếu cột là khóa ngoại thì k khao báo biến mà sẽ chuyển thành đối tượng của bảng được tham chiếu tới
 public class User {
 	private int id;
+	private String email;
 	private String userName;
 	private String password;
+	private String firstName;
+	private String lastName;
+	private Role role;
 	
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 	public int getId() {
 		return id;
 	}

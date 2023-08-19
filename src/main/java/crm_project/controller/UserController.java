@@ -16,21 +16,31 @@ import javax.servlet.http.HttpServletResponse;
 
 import config.MySqlConfig;
 import entity.Role;
+import entity.User;
 import service.RoleService;
 import service.UserService;
 
-@WebServlet(name = "userController", urlPatterns = { "/user-add" })
+@WebServlet(name = "userController", urlPatterns = { "/user-add", "/users" })
 public class UserController extends HttpServlet {
 	private UserService userService = new UserService();
 	private RoleService roleService = new RoleService();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		List<Role> list = new ArrayList<Role>();
-		list = roleService.getAllRole();
+		String path = req.getServletPath();
+		
+		if (path.equals("/user-add")) {
+			List<Role> list = new ArrayList<Role>();
+			list = roleService.getAllRole();
 
-		req.setAttribute("listRole", list);
-		req.getRequestDispatcher("user-add.jsp").forward(req, resp);
+			req.setAttribute("listRole", list);
+			req.getRequestDispatcher("user-add.jsp").forward(req, resp);
+		} else if (path.equals("/users")) {
+			List<User> listUser = new ArrayList<User>();
+			listUser = userService.getAllUser();
+			req.setAttribute("listUser", listUser);
+			req.getRequestDispatcher("user-table.jsp").forward(req, resp);
+		}
 	}
 
 	@Override

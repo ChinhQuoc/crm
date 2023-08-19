@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,6 +88,13 @@ public class LoginController extends HttpServlet{
 			}
 		} catch (Exception e) {
 			System.out.println("Lỗi thực thi truy vấn " + e.getLocalizedMessage());
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 	}
