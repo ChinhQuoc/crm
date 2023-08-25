@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page session="false" %>
+<%@ page session="false"%>
 <html lang="en">
 
 <head>
@@ -148,32 +148,39 @@
 										</tr>
 									</thead>
 									<tbody>
-									<c:choose>
+										<c:choose>
 											<c:when test="${listUser == null}">
 												<tr>
 													<td colspan="6">Không có user nào</td>
 												</tr>
 											</c:when>
 											<c:otherwise>
-												<c:forEach var="item" items="${listUser}" varStatus="position">
+												<c:forEach var="item" items="${listUser}"
+													varStatus="position">
 													<tr>
 														<td>${ (position.index + 1) }</td>
 														<td>${ item.firstName }</td>
 														<td>${ item.lastName }</td>
 														<td>${ item.userName }</td>
 														<td>${ item.role.name }</td>
-														<td>
-															<a href="#" class="btn btn-sm btn-primary">Sửa</a>
+														<td><a href="#" class="btn btn-sm btn-primary">Sửa</a>
 															<%-- <form>
 																<input type="hidden" value="${item.id}" />
-															</form> --%>
-															<a href="#" class="btn btn-sm btn-danger btn-xoa" id-user="${item.id}">Xóa</a>
-															<a href="user-details.html" class="btn btn-sm btn-info">Xem</a>
-														</td>
+															</form> --%> <a href="#"
+															class="btn btn-sm btn-danger btn-xoa"
+															id-user="${item.id}">Xóa</a> <a href="user-details.html"
+															class="btn btn-sm btn-info">Xem</a></td>
 													</tr>
 												</c:forEach>
 											</c:otherwise>
 										</c:choose>
+										<div class="alert alert-success" role="alert">
+											<button type="button" class="close" data-dismiss="alert"
+												aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+											Thêm project thành công
+										</div>
 									</tbody>
 								</table>
 							</div>

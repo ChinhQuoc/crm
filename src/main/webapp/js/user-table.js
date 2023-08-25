@@ -1,7 +1,5 @@
 // Khi nào file html được load thì thực hiện gì đó
 $(document).ready(function() {
-	
-	
 	// đăng ký sự kiện click: $("tên thẻ || tên class || id").click()
 	// class => .
 	// id => #
@@ -25,7 +23,8 @@ $(document).ready(function() {
 				  //.closest => đi ra thằng cha được chỉ định
 				  //.remove => Xóa thẻ
 				  //This.parent().parent().remove();
-				  This.closest('tr').remove();
+				  //This.closest('tr').remove();
+				  window.location.reload();
 			  }
 	  	});
 	})
