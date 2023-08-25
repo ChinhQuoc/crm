@@ -13,7 +13,17 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import entity.User;
+import payload.response.BaseResponse;
 import service.UserService;
+
+/**
+ * 
+ * @author DELL
+ * payload:
+ * - response: chứa các class liên quan tới format json trả ra cho client
+ * - request: chứa các class liên quan tới format json request (tham số) client truyền lên server
+ *
+ */
 
 @WebServlet(name = "apiUserController", urlPatterns = {"/api/user", "/api/user/delete"})
 public class ApiUserController extends HttpServlet{
@@ -23,13 +33,17 @@ public class ApiUserController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path = req.getServletPath();
-		System.out.println("PATH: " + path);
 		
 		if (path.equals("/api/user")) {
 			List<User> listUser = userService.getAllUser();
 			
+			BaseResponse response = new BaseResponse();
+			response.setStatusCode(200);
+			response.setMessage("");
+			response.setData(listUser);
+			
 			// chuyển list or mảng về JSON
-			String dataJson = gson.toJson(listUser);
+			String dataJson = gson.toJson(response);
 			
 			// trả dữ liệu dạng JSON
 			PrintWriter out = resp.getWriter();
@@ -40,22 +54,22 @@ public class ApiUserController extends HttpServlet{
 			
 			out.flush();
 		} else if (path.equals("/api/user/delete")) {
-			String param = req.getQueryString();
-			String idUser = param.split("=")[1];
-			if (idUser != null) {
-				String result = userService.deleteUser(idUser);
-				
-				String dataJson = gson.toJson(result);
-				
-				// trả dữ liệu dạng JSON
-				PrintWriter out = resp.getWriter();
-				resp.setContentType("application/json");
-				resp.setCharacterEncoding("UTF-8");
-				
-				out.print(dataJson);
-				
-				out.flush();
-			}
+			int id = Integer.parseInt(req.getParameter("id"));
+			boolean isSuccess = userService.deleteUser(id);
+			
+			BaseResponse response = new BaseResponse();
+			response.setStatusCode(200);
+			response.setMessage(isSuccess ? "Xóa thành công" : "Xóa thất bại");
+			response.setData(isSuccess);
+			
+			String dataJson = gson.toJson(response);
+			
+			// trả dữ liệu dạng JSON
+			PrintWriter out = resp.getWriter();
+			resp.setContentType("application/json");
+			resp.setCharacterEncoding("UTF-8");
+			
+			out.print(dataJson);
 		}
 	}
 }

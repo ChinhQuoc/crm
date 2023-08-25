@@ -23,6 +23,7 @@ public class UserRepository {
 			
 			while (result.next()) {
 				User user = new User();
+				user.setId(result.getInt("id"));
 				user.setFirstName(result.getString("firstName"));
 				user.setLastName(result.getString("lastName"));
 				user.setUserName(result.getString("userName"));
@@ -73,7 +74,7 @@ public class UserRepository {
 		return count;
 	}
 	
-	public int delete(String id) {
+	public int deleteById(int id) {
 		String query = "DELETE FROM Users where id = " + id;
 		Connection connection = MySqlConfig.getConnection();
 		int count = 0;

@@ -120,55 +120,176 @@
 			<div class="container-fluid">
 				<div class="row bg-title">
 					<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-						<h4 class="page-title">Thêm mới quyền</h4>
+						<h4 class="page-title">Chi tiết thành viên</h4>
 					</div>
 				</div>
 				<!-- /.row -->
 				<!-- .row -->
 				<div class="row">
-					<div class="col-md-2 col-12"></div>
-					<div class="col-md-8 col-xs-12">
+					<div class="col-md-4 col-xs-12">
 						<div class="white-box">
-							<form action="<c:url value='/role-add' />" method="post" class="form-horizontal form-material">
-								<div class="form-group">
-									<label class="col-md-12">Tên quyền</label>
-									<div class="col-md-12">
-										<input type="text" name="role-name" placeholder="Tên quyền"
-											class="form-control form-control-line" />
+							<div class="user-bg">
+								<img width="100%" alt="user" src="plugins/images/large/img1.jpg">
+								<div class="overlay-box">
+									<div class="user-content">
+										<a href="javascript:void(0)"><img
+											src="plugins/images/users/genu.jpg"
+											class="thumb-lg img-circle" alt="img"></a>
+										<h4 class="text-white">Nguyễn Văn Tèo</h4>
+										<h5 class="text-white">info.teo@gmail.com</h5>
 									</div>
 								</div>
-								<div class="form-group">
-									<label class="col-md-12">Mô tả</label>
-									<div class="col-md-12">
-										<input type="text" name="desc" placeholder="Mô tả"
-											class="form-control form-control-line" />
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-sm-12">
-										<button type="submit" class="btn btn-success">Add
-											Role</button>
-										<a href="role-table.html" class="btn btn-primary">Quay lại</a>
-									</div>
-								</div>
-							</form>
-							<c:if test="${isSuccess}">
-								<div class="alert alert-success" role="alert">
-								  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								  Thêm role thành công
-								</div>
-							</c:if>
-							<c:if test="${isSuccess == false}">
-								<div class="alert alert-success" role="alert">
-								  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								  Thêm role thất bại
-								</div>
-							</c:if>
+							</div>
+
 						</div>
 					</div>
-					<div class="col-md-2 col-12"></div>
+					<div class="col-md-8 col-xs-12">
+						<!-- BEGIN THỐNG KÊ -->
+						<div class="row">
+							<!--col -->
+							<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+								<div class="white-box">
+									<div class="col-in row">
+										<div class="col-xs-12">
+											<h3 class="counter text-right m-t-15 text-danger">20%</h3>
+										</div>
+										<div class="col-xs-12">
+											<i data-icon="E" class="linea-icon linea-basic"></i>
+											<h5 class="text-muted vb text-center">CHƯA BẮT ĐẦU</h5>
+										</div>
+										<div class="col-md-12 col-sm-12 col-xs-12">
+											<div class="progress">
+												<div class="progress-bar progress-bar-danger"
+													role="progressbar" aria-valuenow="40" aria-valuemin="0"
+													aria-valuemax="100" style="width: 20%"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /.col -->
+							<!--col -->
+							<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+								<div class="white-box">
+									<div class="col-in row">
+										<div class="col-xs-12">
+											<h3 class="counter text-right m-t-15 text-megna">50%</h3>
+										</div>
+										<div class="col-xs-12">
+											<i class="linea-icon linea-basic" data-icon="&#xe01b;"></i>
+											<h5 class="text-muted vb text-center">ĐANG THỰC HIỆN</h5>
+										</div>
+										<div class="col-md-12 col-sm-12 col-xs-12">
+											<div class="progress">
+												<div class="progress-bar progress-bar-megna"
+													role="progressbar" aria-valuenow="40" aria-valuemin="0"
+													aria-valuemax="100" style="width: 50%"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /.col -->
+							<!--col -->
+							<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+								<div class="white-box">
+									<div class="col-in row">
+										<div class="col-xs-12">
+											<h3 class="counter text-right m-t-15 text-primary">30%</h3>
+										</div>
+										<div class="col-xs-12">
+											<i class="linea-icon linea-basic" data-icon="&#xe00b;"></i>
+											<h5 class="text-muted vb text-center">HOÀN THÀNH</h5>
+										</div>
+										<div class="col-md-12 col-sm-12 col-xs-12">
+											<div class="progress">
+												<div class="progress-bar progress-bar-primary"
+													role="progressbar" aria-valuenow="40" aria-valuemin="0"
+													aria-valuemax="100" style="width: 30%"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /.col -->
+						</div>
+						<!-- END THỐNG KÊ -->
+
+					</div>
 				</div>
+				<br />
 				<!-- /.row -->
+				<!-- BEGIN DANH SÁCH CÔNG VIỆC -->
+				<h4>DANH SÁCH CÔNG VIỆC</h4>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="white-box">
+							<h3 class="box-title">Chưa thực hiện</h3>
+							<div class="message-center">
+								<a href="#">
+									<div class="mail-contnet">
+										<h5>Phân tích hệ thống</h5>
+										<span class="mail-desc"></span> <span class="time">Bắt
+											đầu: 05/07/2020</span> <span class="time">Kết thúc:
+											17/07/2020</span>
+									</div>
+								</a> <a href="#">
+									<div class="mail-contnet">
+										<h5>Thiết kế database</h5>
+										<span class="mail-desc"></span> <span class="time">Bắt
+											đầu: 05/07/2020</span> <span class="time">Kết thúc:
+											17/07/2020</span>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="white-box">
+							<h3 class="box-title">Đang thực hiện</h3>
+							<div class="message-center">
+								<a href="#">
+									<div class="mail-contnet">
+										<h5>Phân tích hệ thống</h5>
+										<span class="mail-desc"></span> <span class="time">Bắt
+											đầu: 05/07/2020</span> <span class="time">Kết thúc:
+											17/07/2020</span>
+									</div>
+								</a> <a href="#">
+									<div class="mail-contnet">
+										<h5>Thiết kế database</h5>
+										<span class="mail-desc"></span> <span class="time">Bắt
+											đầu: 05/07/2020</span> <span class="time">Kết thúc:
+											17/07/2020</span>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="white-box">
+							<h3 class="box-title">Đã hoàn thành</h3>
+							<div class="message-center">
+								<a href="#">
+									<div class="mail-contnet">
+										<h5>Phân tích hệ thống</h5>
+										<span class="mail-desc"></span> <span class="time">Bắt
+											đầu: 05/07/2020</span> <span class="time">Kết thúc:
+											17/07/2020</span>
+									</div>
+								</a> <a href="#">
+									<div class="mail-contnet">
+										<h5>Thiết kế database</h5>
+										<span class="mail-desc"></span> <span class="time">Bắt
+											đầu: 05/07/2020</span> <span class="time">Kết thúc:
+											17/07/2020</span>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- END DANH SÁCH CÔNG VIỆC -->
 			</div>
 			<!-- /.container-fluid -->
 			<footer class="footer text-center"> 2018 &copy; myclass.com
@@ -191,4 +312,5 @@
 	<!-- Custom Theme JavaScript -->
 	<script src="js/custom.min.js"></script>
 </body>
+
 </html>

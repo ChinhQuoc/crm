@@ -18,13 +18,9 @@ public class UserService {
 		return count > 0;
 	}
 	
-	public String deleteUser(String id) {
-		int count = userRepository.delete(id);
+	public boolean deleteUser(int id) {
+		int count = userRepository.deleteById(id);
 		
-		if (count > 0) {
-			return "Xóa user thành công";
-		}
-		
-		return "Xóa user không thành công";
+		return count > 0;
 	}
 }

@@ -1,7 +1,7 @@
 package entity;
 
 // entity: là nơi khai báo ra các class đặt tên và thuộc tính giống với lại tên bảng trong BD
-// Nếu cột là khóa ngoại thì k khao báo biến mà sẽ chuyển thành đối tượng của bảng được tham chiếu tới
+// Nếu cột là khóa ngoại thì k khai báo biến mà sẽ chuyển thành đối tượng của bảng được tham chiếu tới
 public class User {
 	private int id;
 	private String email;
