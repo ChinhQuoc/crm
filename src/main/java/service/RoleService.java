@@ -24,4 +24,18 @@ public class RoleService {
 	public List<Role> getAllRole() {
 		return roleRepository.findAll();
 	}
+	
+	public Role findRoleById(int id) {
+		return roleRepository.findById(id);
+	}
+	
+	public boolean editRole(Role role) {
+		int count = roleRepository.update(role);
+		return count > 0;
+	}
+	
+	public boolean deleteRole(int id) {
+		int count = roleRepository.deleteById(id);
+		return count > 0;
+	}
 }

@@ -17,4 +17,22 @@ public class GroupWorkService {
 		
 		return count > 0;
 	}
+	
+	public List<Project> getNameProjects() {
+		return groupWorkRepository.findNameProjects();
+	}
+	
+	public Project getById(int id) {
+		return groupWorkRepository.findById(id);
+	}
+	
+	public boolean editProject(int id, String name, String startDate, String endDate) {
+		int count = groupWorkRepository.update(id, name, startDate, endDate);
+		return count > 0;
+	}
+	
+	public boolean deleteProject(int id) {
+		int count = groupWorkRepository.deleteById(id);
+		return count > 0;
+	}
 }

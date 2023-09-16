@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page session="false" %>
+<%@ page session="false"%>
 <html lang="en">
 
 <head>
@@ -129,39 +129,44 @@
 					<div class="col-md-2 col-12"></div>
 					<div class="col-md-8 col-xs-12">
 						<div class="white-box">
-							<form action="<c:url value='/role-add' />" method="post" class="form-horizontal form-material">
+							<form action="<c:url value='/role-add' />" method="post"
+								class="form-horizontal form-material">
 								<div class="form-group">
 									<label class="col-md-12">Tên quyền</label>
 									<div class="col-md-12">
-										<input type="text" name="role-name" placeholder="Tên quyền"
-											class="form-control form-control-line" />
+										<input type="text" name="role-name" placeholder="Tên quyền" class="form-control form-control-line" />
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-12">Mô tả</label>
 									<div class="col-md-12">
-										<input type="text" name="desc" placeholder="Mô tả"
-											class="form-control form-control-line" />
+										<input type="text" name="desc" placeholder="Mô tả" class="form-control form-control-line" />
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="col-sm-12">
-										<button type="submit" class="btn btn-success">Add
-											Role</button>
-										<a href="role-table.html" class="btn btn-primary">Quay lại</a>
+										<button type="submit" class="btn btn-success">Add Role</button>
+										<a href=<c:url value="role" /> class="btn btn-primary">Quay
+											lại</a>
 									</div>
 								</div>
 							</form>
 							<c:if test="${isSuccess}">
 								<div class="alert alert-success" role="alert">
-								  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								  Thêm role thành công
+									<button type="button" class="close" data-dismiss="alert"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									Thêm role thành công
 								</div>
 							</c:if>
 							<c:if test="${isSuccess == false}">
 								<div class="alert alert-success" role="alert">
-								  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								  Thêm role thất bại
+									<button type="button" class="close" data-dismiss="alert"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									Thêm role thất bại
 								</div>
 							</c:if>
 						</div>

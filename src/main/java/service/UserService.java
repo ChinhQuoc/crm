@@ -23,4 +23,12 @@ public class UserService {
 		
 		return count > 0;
 	}
+	
+	public List<User> getNameUsers() {
+		return userRepository.findNameUsers();
+	}
+	
+	public User getUserById(int id) {
+		return userRepository.findById(id);
+	}
 }

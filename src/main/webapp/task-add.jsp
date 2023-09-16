@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page session="false" %>
+<%@ page session="false"%>
 <html lang="en">
 
 <head>
@@ -73,10 +73,10 @@
 								class="hidden-xs">Cybersoft</b>
 							</a>
 							<ul class="dropdown-menu">
-								<li><a href="profile.html">Thông tin cá nhân</a></li>
+								<li><a href=<c:url value="/profile"/>>Thông tin cá nhân</a></li>
 								<li><a href="#">Thống kê công việc</a></li>
 								<li class="divider"></li>
-								<li><a href="#">Đăng xuất</a></li>
+								<li><a href=<c:url value="/login"/>>Đăng xuất</a></li>
 							</ul>
 						</div>
 					</li>
@@ -99,16 +99,16 @@
 					<li><a href=<c:url value="/role" /> class="waves-effect"><i
 							class="fa fa-modx fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Quyền</span></a></li>
-					<li><a href=<c:url value="groupwork" /> class="waves-effect"><i
+					<li><a href=<c:url value="/groupwork" /> class="waves-effect"><i
 							class="fa fa-table fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Dự án</span></a></li>
-					<li><a href=<c:url value="tasks" /> class="waves-effect"><i
+					<li><a href=<c:url value="/tasks" /> class="waves-effect"><i
 							class="fa fa-table fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Công việc</span></a></li>
-					<li><a href=<c:url value="blank" /> class="waves-effect"><i
+					<li><a href=<c:url value="/blank" /> class="waves-effect"><i
 							class="fa fa-columns fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Blank Page</span></a></li>
-					<li><a href=<c:url value="404" /> class="waves-effect"><i
+					<li><a href=<c:url value="/error-permission" /> class="waves-effect"><i
 							class="fa fa-info-circle fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Error 404</span></a></li>
 				</ul>
@@ -129,55 +129,75 @@
 					<div class="col-md-2 col-12"></div>
 					<div class="col-md-8 col-xs-12">
 						<div class="white-box">
-							<form class="form-horizontal form-material">
+							<form action="<c:url value="task-add" />" method="post" class="form-horizontal form-material">
 								<div class="form-group">
 									<label class="col-md-12">Dự án</label>
 									<div class="col-md-12">
-										<select class="form-control form-control-line">
-											<option>Dự án CRM</option>
-											<option>Dự án Elearning</option>
-											<option>Dự án Rạp chiếu phim</option>
+										<select class="form-control form-control-line" name="project">
+											<c:forEach var="item" items="${ projects }">
+												<option value="${item.id}">${item.name}</option>
+											</c:forEach>
 										</select>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-12">Tên công việc</label>
 									<div class="col-md-12">
-										<input type="text" placeholder="Tên công việc"
+										<input type="text" placeholder="Tên công việc" name="name"
+											class="form-control form-control-line">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-12">Nội dung</label>
+									<div class="col-md-12">
+										<input type="text" placeholder="Nội dung" name="content"
 											class="form-control form-control-line">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-12">Người thực hiện</label>
 									<div class="col-md-12">
-										<select class="form-control form-control-line">
-											<option>Nguyễn Văn Tèo</option>
-											<option>Trần Thị Lan</option>
-											<option>Cao Ngọc Hiếu</option>
+										<select class="form-control form-control-line" name="user">
+											<c:forEach var="item" items="${ users }">
+												<option value="${item.id}">${item.fullName}</option>
+											</c:forEach>
 										</select>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-12">Ngày bắt đầu</label>
 									<div class="col-md-12">
-										<input type="text" placeholder="dd/MM/yyyy"
+										<input type="text" placeholder="yyyy-MM-dd" name="startDate"
 											class="form-control form-control-line">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-12">Ngày kết thúc</label>
 									<div class="col-md-12">
-										<input type="text" placeholder="dd/MM/yyyy"
+										<input type="text" placeholder="yyyy-MM-dd" name="endDate"
 											class="form-control form-control-line">
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="col-sm-12">
 										<button type="submit" class="btn btn-success">Lưu lại</button>
-										<a href="task.html" class="btn btn-primary">Quay lại</a>
+										<a href=<c:url value="tasks" /> class="btn btn-primary">Quay lại</a>
 									</div>
 								</div>
 							</form>
+							
+							<c:if test="${ isSuccess }">
+								<div class="alert alert-success" role="alert">
+								  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								  Thêm job thành công
+								</div>
+							</c:if>
+							<c:if test="${ isSuccess == false }">
+								<div class="alert alert-success" role="alert">
+								  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								  Thêm job thất bại
+								</div>
+							</c:if>
 						</div>
 					</div>
 					<div class="col-md-2 col-12"></div>

@@ -42,7 +42,7 @@
 				<h3 class="text-uppercase">Bạn không có quyền truy cập !</h3>
 				<p class="text-muted m-t-30 m-b-30">YOU SEEM TO BE TRYING TO
 					FIND HIS WAY HOME</p>
-				<a href='<c:url value="/home" />'
+				<a href=<c:url value="/" />
 					class="btn btn-info btn-rounded waves-effect waves-light m-b-40">Về
 					trang chủ</a>
 			</div>

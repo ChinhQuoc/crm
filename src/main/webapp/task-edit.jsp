@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page session="false" %>
+<%@ page session="false"%>
 <html lang="en">
 
 <head>
@@ -129,52 +129,75 @@
 					<div class="col-md-2 col-12"></div>
 					<div class="col-md-8 col-xs-12">
 						<div class="white-box">
-							<form class="form-horizontal form-material">
+							<form action="<c:url value="task-edit?id=${ job.id }" />" method="post" class="form-horizontal form-material">
 								<div class="form-group">
-									<label class="col-md-12">Tên dự án</label>
+									<label class="col-md-12">Dự án</label>
 									<div class="col-md-12">
-										<input type="text" readonly value="Dự án CRM"
-											class="form-control form-control-line">
+										<select class="form-control form-control-line" name="project">
+											<c:forEach var="item" items="${ projects }">
+												<option value="${item.id}" ${ item.id == job.idProject ? 'selected' : '' }>${item.name}</option>
+											</c:forEach>
+										</select>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-12">Tên công việc</label>
 									<div class="col-md-12">
-										<input type="text" readonly value="Thiết kế database"
+										<input value="${ job.name }" type="text" placeholder="Tên công việc" name="name"
 											class="form-control form-control-line">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-12">Nội dung</label>
+									<div class="col-md-12">
+										<input value="${ job.content }" type="text" placeholder="Nội dung" name="content"
+											class="form-control form-control-line">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-12">Người thực hiện</label>
+									<div class="col-md-12">
+										<select class="form-control form-control-line" name="user">
+											<c:forEach var="item" items="${ users }">
+												<option value="${item.id}" ${ item.id == job.idUser ? 'selected' : '' }>${item.fullName}</option>
+											</c:forEach>
+										</select>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-12">Ngày bắt đầu</label>
 									<div class="col-md-12">
-										<input type="text" readonly value="05-07/2020"
+										<input value="${ job.startDate }" type="text" placeholder="yyyy-MM-dd" name="startDate"
 											class="form-control form-control-line">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-12">Ngày kết thúc</label>
 									<div class="col-md-12">
-										<input type="text" readonly value="17-07/2020"
+										<input value="${ job.endDate }" type="text" placeholder="yyyy-MM-dd" name="endDate"
 											class="form-control form-control-line">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-md-12">Trạng thái</label>
-									<div class="col-md-12">
-										<select class="form-control form-control-line">
-											<option>Chưa thực hiện</option>
-											<option selected>Đang thực hiện</option>
-											<option>Đã hoàn thành</option>
-										</select>
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="col-sm-12">
 										<button type="submit" class="btn btn-success">Lưu lại</button>
-										<a href="profile.html" class="btn btn-primary">Quay lại</a>
+										<a href=<c:url value="tasks" /> class="btn btn-primary">Quay lại</a>
 									</div>
 								</div>
 							</form>
+							
+							<c:if test="${ isSuccess }">
+								<div class="alert alert-success" role="alert">
+								  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								  Cập nhật job thành công
+								</div>
+							</c:if>
+							<c:if test="${ isSuccess == false }">
+								<div class="alert alert-success" role="alert">
+								  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								  Cập nhật job thất bại
+								</div>
+							</c:if>
 						</div>
 					</div>
 					<div class="col-md-2 col-12"></div>

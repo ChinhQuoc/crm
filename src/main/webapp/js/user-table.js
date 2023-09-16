@@ -25,7 +25,12 @@ $(document).ready(function() {
 				  //This.parent().parent().remove();
 				  //This.closest('tr').remove();
 				  window.location.reload();
+			  } else {
+				  alert("User đang được sử dụng");
 			  }
-	  	});
+	  	})
+	  	.fail(function(jqXHR, textStatus, errorThrown) {
+			  alert("Lỗi xóa user " + errorThrown);
+		  });
 	})
 })

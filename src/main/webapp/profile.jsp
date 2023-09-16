@@ -73,10 +73,10 @@
 								class="hidden-xs">Cybersoft</b>
 							</a>
 							<ul class="dropdown-menu">
-								<li><a href="profile.html">Thông tin cá nhân</a></li>
+								<li><a href=<c:url value="/profile"/>>Thông tin cá nhân</a></li>
 								<li><a href="#">Thống kê công việc</a></li>
 								<li class="divider"></li>
-								<li><a href="#">Đăng xuất</a></li>
+								<li><a href=<c:url value="/login"/>>Đăng xuất</a></li>
 							</ul>
 						</div>
 					</li>
@@ -99,16 +99,16 @@
 					<li><a href=<c:url value="/role" /> class="waves-effect"><i
 							class="fa fa-modx fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Quyền</span></a></li>
-					<li><a href=<c:url value="groupwork" /> class="waves-effect"><i
+					<li><a href=<c:url value="/groupwork" /> class="waves-effect"><i
 							class="fa fa-table fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Dự án</span></a></li>
-					<li><a href=<c:url value="tasks" /> class="waves-effect"><i
+					<li><a href=<c:url value="/tasks" /> class="waves-effect"><i
 							class="fa fa-table fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Công việc</span></a></li>
-					<li><a href=<c:url value="blank" /> class="waves-effect"><i
+					<li><a href=<c:url value="/blank" /> class="waves-effect"><i
 							class="fa fa-columns fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Blank Page</span></a></li>
-					<li><a href=<c:url value="404" /> class="waves-effect"><i
+					<li><a href=<c:url value="/error-permission" /> class="waves-effect"><i
 							class="fa fa-info-circle fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Error 404</span></a></li>
 				</ul>
@@ -129,14 +129,14 @@
 					<div class="col-md-4 col-xs-12">
 						<div class="white-box">
 							<div class="user-bg">
-								<img width="100%" alt="user" src="plugins/images/large/img1.jpg">
+								<img width="100%" alt="user" src="${user.image != null ? user.image : "\plugins/images/large/img1.jpg\"}">
 								<div class="overlay-box">
 									<div class="user-content">
 										<a href="javascript:void(0)"><img
 											src="plugins/images/users/genu.jpg"
 											class="thumb-lg img-circle" alt="img"></a>
-										<h4 class="text-white">Nguyễn Văn Tèo</h4>
-										<h5 class="text-white">info.teo@gmail.com</h5>
+										<h4 class="text-white">${ (user.fullName) }</h4>
+										<h5 class="text-white">${ (user.email) }</h5>
 									</div>
 								</div>
 							</div>

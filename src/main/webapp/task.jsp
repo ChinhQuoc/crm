@@ -76,10 +76,10 @@
 								class="hidden-xs">Cybersoft</b>
 							</a>
 							<ul class="dropdown-menu">
-								<li><a href="profile.html">Thông tin cá nhân</a></li>
+								<li><a href=<c:url value="/profile"/>>Thông tin cá nhân</a></li>
 								<li><a href="#">Thống kê công việc</a></li>
 								<li class="divider"></li>
-								<li><a href="#">Đăng xuất</a></li>
+								<li><a href=<c:url value="/login"/>>Đăng xuất</a></li>
 							</ul>
 						</div>
 					</li>
@@ -102,16 +102,16 @@
 					<li><a href=<c:url value="/role" /> class="waves-effect"><i
 							class="fa fa-modx fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Quyền</span></a></li>
-					<li><a href=<c:url value="groupwork" /> class="waves-effect"><i
+					<li><a href=<c:url value="/groupwork" /> class="waves-effect"><i
 							class="fa fa-table fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Dự án</span></a></li>
-					<li><a href=<c:url value="tasks" /> class="waves-effect"><i
+					<li><a href=<c:url value="/tasks" /> class="waves-effect"><i
 							class="fa fa-table fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Công việc</span></a></li>
-					<li><a href=<c:url value="blank" /> class="waves-effect"><i
+					<li><a href=<c:url value="/blank" /> class="waves-effect"><i
 							class="fa fa-columns fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Blank Page</span></a></li>
-					<li><a href=<c:url value="404" /> class="waves-effect"><i
+					<li><a href=<c:url value="/error-permission" /> class="waves-effect"><i
 							class="fa fa-info-circle fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Error 404</span></a></li>
 				</ul>
@@ -126,7 +126,7 @@
 						<h4 class="page-title">Danh sách công việc</h4>
 					</div>
 					<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12 text-right">
-						<a href="task-add.html" class="btn btn-sm btn-success">Thêm
+						<a href=<c:url value="task-add" /> class="btn btn-sm btn-success">Thêm
 							mới</a>
 					</div>
 					<!-- /.col-lg-12 -->
@@ -150,30 +150,30 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>1</td>
-											<td>Phân tích dự án</td>
-											<td>Dự án CRM</td>
-											<td>Nguyễn Văn Tèo</td>
-											<td>22/05/2019</td>
-											<td>30/05/2019</td>
-											<td>Đã hoàn thành</td>
-											<td><a href="#" class="btn btn-sm btn-primary">Sửa</a> <a
-												href="#" class="btn btn-sm btn-danger">Xóa</a> <a href="#"
-												class="btn btn-sm btn-info">Xem</a></td>
-										</tr>
-										<tr>
-											<td>1</td>
-											<td>Thiết kế database</td>
-											<td>Dự án CRM</td>
-											<td>Trần Thị Lan</td>
-											<td>22/05/2019</td>
-											<td>30/05/2019</td>
-											<td>Đang thực hiện</td>
-											<td><a href="#" class="btn btn-sm btn-primary">Sửa</a> <a
-												href="#" class="btn btn-sm btn-danger">Xóa</a> <a href="#"
-												class="btn btn-sm btn-info">Xem</a></td>
-										</tr>
+										<c:choose>
+											<c:when test="${ jobs == null }">
+												<tr>
+													<td colspan="8">Không có công việc nào</td>
+												</tr>
+											</c:when>
+											<c:otherwise>
+												<c:forEach var="item" items="${ jobs }" varStatus="position">
+													<tr>
+														<td>${ (position.index + 1) }</td>
+														<td>${ item.name }</td>
+														<td>${ item.nameProject }</td>
+														<td>${ item.nameUser }</td>
+														<td>${ item.startDate }</td>
+														<td>${ item.endDate }</td>
+														<td>${ item.status }</td>
+														<td>
+															<a href=<c:url value="/task-edit?id=${ item.id }"/> class="btn btn-sm btn-primary">Sửa</a> 
+															<a href="#" id-task="${ item.id }" class="btn btn-sm btn-danger btn-xoa">Xóa</a>
+														</td>
+													</tr>
+												</c:forEach>
+											</c:otherwise>
+										</c:choose>
 									</tbody>
 								</table>
 							</div>
@@ -209,6 +209,7 @@
 			$('#example').DataTable();
 		});
 	</script>
+	<script type="text/javascript" src="js/task.js"></script>
 </body>
 
 </html>

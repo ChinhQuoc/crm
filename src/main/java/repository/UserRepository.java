@@ -36,7 +36,7 @@ public class UserRepository {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println("Lỗi lấy danh sách user" + e.getLocalizedMessage());;
+			System.out.println("Lỗi lấy danh sách user" + e.getLocalizedMessage());
 		} finally {
 			try {
 				connection.close();
@@ -95,5 +95,65 @@ public class UserRepository {
 		}
 		
 		return count;
+	}
+	
+	public List<User> findNameUsers() {
+		String query = "SELECT id, fullName FROM Users";
+		Connection connection = MySqlConfig.getConnection();
+		List<User> users = new ArrayList<User>();
+		
+		try {
+			PreparedStatement statement = connection.prepareStatement(query);
+			ResultSet result = statement.executeQuery();
+			
+			while(result.next()) {
+				User user = new User();
+				user.setId(result.getInt("id"));
+				user.setFullName(result.getString("fullName"));
+				users.add(user);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Lỗi lấy danh sách user" + e.getLocalizedMessage());
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return users;
+	}
+	
+	public User findById(int id) {
+		String query = "SELECT id, email, fullName, image FROM Users WHERE id = "+ id;
+		Connection conn = MySqlConfig.getConnection();
+		User user = new User();
+		
+		try {
+			PreparedStatement statement = conn.prepareStatement(query);
+			ResultSet result = statement.executeQuery();
+			
+			while (result.next()) {
+				user.setId(result.getInt("id"));
+				user.setEmail(result.getString("email"));
+				user.setFullName(result.getString("fullName"));
+				user.setImage(result.getString("image"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Lỗi lấy thông tin user " + e.getLocalizedMessage());
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return user;
 	}
 }

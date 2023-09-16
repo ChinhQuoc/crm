@@ -76,7 +76,7 @@
 								<li><a href=<c:url value="/profile"/>>Thông tin cá nhân</a></li>
 								<li><a href="#">Thống kê công việc</a></li>
 								<li class="divider"></li>
-								<li><a href=<c:url value="/login"/>>Đăng xuất</a></li>
+								<li><a href=<c:url value="/login" />>Đăng xuất</a></li>
 							</ul>
 						</div>
 					</li>
@@ -120,7 +120,7 @@
 			<div class="container-fluid">
 				<div class="row bg-title">
 					<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-						<h4 class="page-title">Thêm mới công việc</h4>
+						<h4 class="page-title">Chỉnh sửa dự án</h4>
 					</div>
 				</div>
 				<!-- /.row -->
@@ -129,52 +129,48 @@
 					<div class="col-md-2 col-12"></div>
 					<div class="col-md-8 col-xs-12">
 						<div class="white-box">
-							<form class="form-horizontal form-material">
+							<form action="<c:url value="/groupwork-edit?id=${ project.id }" />" method="post" class="form-horizontal form-material">
 								<div class="form-group">
 									<label class="col-md-12">Tên dự án</label>
 									<div class="col-md-12">
-										<input type="text" readonly value="Dự án CRM"
-											class="form-control form-control-line">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-md-12">Tên công việc</label>
-									<div class="col-md-12">
-										<input type="text" readonly value="Thiết kế database"
+										<input value="${ project.name }" name="name" type="text" placeholder="Tên công việc"
 											class="form-control form-control-line">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-12">Ngày bắt đầu</label>
 									<div class="col-md-12">
-										<input type="text" readonly value="05-07/2020"
+										<input value="${ project.startDate }" name="startDate" type="text" placeholder="yyyy-MM-dd"
 											class="form-control form-control-line">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-12">Ngày kết thúc</label>
 									<div class="col-md-12">
-										<input type="text" readonly value="17-07/2020"
+										<input value="${ project.endDate }" name="endDate" type="text" placeholder="yyyy-MM-dd"
 											class="form-control form-control-line">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-md-12">Trạng thái</label>
-									<div class="col-md-12">
-										<select class="form-control form-control-line">
-											<option>Chưa thực hiện</option>
-											<option selected>Đang thực hiện</option>
-											<option>Đã hoàn thành</option>
-										</select>
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="col-sm-12">
 										<button type="submit" class="btn btn-success">Lưu lại</button>
-										<a href="profile.html" class="btn btn-primary">Quay lại</a>
+										<a href=<c:url value="groupwork" /> class="btn btn-primary">Quay lại</a>
 									</div>
 								</div>
 							</form>
+							
+							<c:if test="${ isSuccess }">
+								<div class="alert alert-success" role="alert">
+								  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								  Chỉnh sửa project thành công
+								</div>
+							</c:if>
+							<c:if test="${ isSuccess == false }">
+								<div class="alert alert-success" role="alert">
+								  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								  Chỉnh sửa project thất bại
+								</div>
+							</c:if>
 						</div>
 					</div>
 					<div class="col-md-2 col-12"></div>
