@@ -1,4 +1,4 @@
-package crm_project.controller;
+package api;
 
 import java.io.IOException;
 
@@ -8,10 +8,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "notFoundController", urlPatterns = {"/error-permission"})
-public class NotFoundController extends HttpServlet{
+import service.JobService;
+
+@WebServlet(name = "apiTaskController", urlPatterns = {"/api/task/delete"})
+public class ApiTaskController extends HttpServlet{
+	private JobService jobService = new JobService();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("404.jsp").forward(req, resp);
+		// TODO Auto-generated method stub
+		super.doGet(req, resp);
 	}
 }

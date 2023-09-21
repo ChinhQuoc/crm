@@ -31,4 +31,8 @@ public class JobService {
 		int count = taskRepository.deleteById(id, idProject, idUser);
 		return count > 0;
 	}
+	
+	public List<Job> getByIdUser(int id) {
+		return taskRepository.selectByIdUser(id);
+	}
 }

@@ -20,7 +20,7 @@ import entity.User;
 import service.RoleService;
 import service.UserService;
 
-@WebServlet(name = "userController", urlPatterns = { "/user-add", "/users" })
+@WebServlet(name = "userController", urlPatterns = { "/user-add", "/users", "/user-detail" })
 public class UserController extends HttpServlet {
 	private UserService userService = new UserService();
 	private RoleService roleService = new RoleService();
@@ -40,6 +40,8 @@ public class UserController extends HttpServlet {
 			listUser = userService.getAllUser();
 			req.setAttribute("listUser", listUser);
 			req.getRequestDispatcher("user-table.jsp").forward(req, resp);
+		} else if (path.equals("/user-detail")) {
+			req.getRequestDispatcher("user-details.jsp").forward(req, resp);
 		}
 	}
 
@@ -52,7 +54,7 @@ public class UserController extends HttpServlet {
 		int idRole = Integer.parseInt(req.getParameter("role"));
 		
 		boolean isSuccess = userService.addUser(fullname, password, phone, email, idRole);
-		
+		req.setAttribute("isSuccess", isSuccess);
 		if (isSuccess) {
 			System.out.println("Thêm thành công");
 		} else {
@@ -64,74 +66,5 @@ public class UserController extends HttpServlet {
 		
 		req.setAttribute("listRole", list);
 		req.getRequestDispatcher("user-add.jsp").forward(req, resp);
-		
-		
-		// lấy tham số từ thẻ form tuyền qua khi người dùng click btn submit
-
-		// tạo câu truy vấn và truyền giá trị
-		/*
-		 * String query = "INSERT INTO Users (fullName, email, pwd, phone, id_role)\r\n"
-		 * + "VALUES ('" + fullname + "', '" + email + "', '" + password + "', '" +
-		 * phone + "', "+ idRole +")";
-		 */
-
-		// Mở kết nối tới CSDL
-		//Connection connection = MySqlConfig.getConnection();
-
-		//try {
-			// Truyền câu query vào db đẫ được kết nối
-			//PreparedStatement statement = connection.prepareStatement(query);
-//			statement.setString(1, fullname);
-//			statement.setString(2, email);
-//			statement.setString(3, password);
-//			statement.setString(4, phone);
-
-			//int count = statement.executeUpdate(query);
-
-			//if (count > 0) {
-				// insert dữ liệu thành công
-				//System.out.println("Thêm thành công");
-			//} else {
-				// insert dữ liệu thất bại
-				//System.out.println("Thêm thất bại");
-			//}
-		//} catch (Exception e) {
-			// TODO: handle exception
-			//System.out.println("Lỗi thêm dữ liệu User " + e.getLocalizedMessage());
-		//} finally {
-		/*
-		 * try { connection.close(); } catch (SQLException e) { // TODO Auto-generated
-		 * catch block System.out.println("Lỗi đóng kết nối " +
-		 * e.getLocalizedMessage()); } }
-		 * 
-		 * List<Role> list = new ArrayList<Role>();
-		 * 
-		 * try { list = getAllRole(); } catch (SQLException e) { // TODO Auto-generated
-		 * catch block System.out.println("Lỗi get all role " +
-		 * e.getLocalizedMessage()); }
-		 */
-	}
-
-	private List<Role> getAllRole() throws SQLException {
-		String query = "SELECT * FROM Role";
-		Connection connection = MySqlConfig.getConnection();
-
-		PreparedStatement statement = connection.prepareStatement(query);
-
-		// thực thi câu truy vấn và được 1 list dữ liệu
-		ResultSet resultSet = statement.executeQuery(query);
-		List<Role> listRole = new ArrayList<Role>();
-
-		// Duyệt qua từng dòng dữ liệu
-		while (resultSet.next()) {
-			Role role = new Role();
-			role.setId(resultSet.getInt("id"));
-			role.setName(resultSet.getString("name"));
-			role.setDescription(resultSet.getString("description"));
-			
-			listRole.add(role);
-		}
-
-		return listRole;
 	}
 }

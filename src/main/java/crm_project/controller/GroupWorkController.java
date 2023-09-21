@@ -20,7 +20,7 @@ import config.MySqlConfig;
 import entity.Project;
 import service.GroupWorkService;
 
-@WebServlet(name = "groupWorkController", urlPatterns = {"/groupwork-add", "/groupwork"})
+@WebServlet(name = "groupWorkController", urlPatterns = {"/groupwork-add", "/groupwork", "/groupwork-detail", "/groupwork-edit"})
 public class GroupWorkController extends HttpServlet{
 	private GroupWorkService groupWorkService = new GroupWorkService();
 	
@@ -37,19 +37,46 @@ public class GroupWorkController extends HttpServlet{
 			
 			req.setAttribute("projects", projects);
 			req.getRequestDispatcher("groupwork.jsp").forward(req, resp);
+		} else if (path.equals("/groupwork-detail")) {
+			req.getRequestDispatcher("groupwork-details.jsp").forward(req, resp);
+		} else if (path.equals("/groupwork-edit")) {
+			int id = Integer.parseInt(req.getParameter("id"));
+			Project project = new Project();
+			project = groupWorkService.getById(id);
+			req.setAttribute("project", project);
+			req.getRequestDispatcher("groupwork-update.jsp").forward(req, resp);
 		}
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String name = req.getParameter("name");
-		String startDate = formatDate(req.getParameter("startDate"));
-		String endDate = formatDate(req.getParameter("endDate"));
+		String path = req.getServletPath();
 		
-		boolean isSuccess = groupWorkService.addProject(name, startDate, endDate);
-		
-		req.setAttribute("isSuccess", isSuccess);
-		req.getRequestDispatcher("groupwork-add.jsp").forward(req, resp);
+		if (path.equals("/groupwork-add")) {
+			String name = req.getParameter("name");
+			String startDate = formatDate(req.getParameter("startDate"));
+			String endDate = formatDate(req.getParameter("endDate"));
+			
+			boolean isSuccess = groupWorkService.addProject(name, startDate, endDate);
+			
+			req.setAttribute("isSuccess", isSuccess);
+			req.getRequestDispatcher("groupwork-add.jsp").forward(req, resp);
+		} else if (path.equals("/groupwork-edit")) {
+			int id = Integer.parseInt(req.getParameter("id"));
+			String name = req.getParameter("name");
+			String startDate = req.getParameter("startDate");
+			String endDate = req.getParameter("endDate");
+			
+			boolean isSuccess = groupWorkService.editProject(id, name, startDate, endDate);
+			
+			req.setAttribute("isSuccess", isSuccess);
+			
+			// get info project after edited
+			Project project = new Project();
+			project = groupWorkService.getById(id);
+			req.setAttribute("project", project);
+			req.getRequestDispatcher("groupwork-update.jsp").forward(req, resp);
+		}
 	}
 	
 	private String formatDate(String dateString){

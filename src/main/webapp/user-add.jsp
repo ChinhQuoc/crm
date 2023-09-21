@@ -170,6 +170,19 @@
                                     </div>
                                 </div>
                             </form>
+                            
+                            <c:if test="${ isSuccess }">
+								<div class="alert alert-success" role="alert">
+								  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								  Thêm user thành công
+								</div>
+							</c:if>
+							<c:if test="${ isSuccess == false }">
+								<div class="alert alert-danger" role="alert">
+								  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								  Thêm user thất bại
+								</div>
+							</c:if>
                         </div>
                     </div>
                     <div class="col-md-2 col-12"></div>

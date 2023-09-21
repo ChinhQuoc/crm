@@ -15,9 +15,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import config.MySqlConfig;
 import entity.User;
+import service.AuthenService;
 
 /**
  * package Controller: là nơi chứa toàn bộ file lq tới khai báo đường dẫn
@@ -27,19 +29,11 @@ import entity.User;
 
 @WebServlet(name = "loginController", urlPatterns = {"/login"})
 public class LoginController extends HttpServlet{
+	private AuthenService authenService = new AuthenService();
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// giây: 8 * 60 * 60
-		int maxAge = 8 * 60 * 60;
-		
-		// URLEncoder.encode: fix lỗi invalid character
-		Cookie cookie = new Cookie("hoten", URLEncoder.encode("Nguyễn Văn A", "UTF-8"));
-		cookie.setMaxAge(maxAge);
-		
-		// yêu cầu client tạo cookie
-		resp.addCookie(cookie);
-		
-		req.getRequestDispatcher("login.html").forward(req, resp);
+		req.getRequestDispatcher("login.jsp").forward(req, resp);
 	}
 	
 	@Override
@@ -47,54 +41,18 @@ public class LoginController extends HttpServlet{
 		String email = req.getParameter("email");
 		String password = req.getParameter("password");
 		
-		// ?: đại diện cho tham số sẽ đc truyền vào khi sử dụng JDBC
-		String query = "SELECT * FROM Users u WHERE u.email = '" + email + "' AND u.pwd = '" + password + "'";
+		List<User> users = authenService.login(email, password);
 		
-		// Mở kết nối tới CSDL
-		Connection conn = MySqlConfig.getConnection();
-		
-		try {
-			// chuẩn bị câu query cho truyền xuống CSDL thông qua PreparedStatement
-			PreparedStatement statement = conn.prepareStatement(query);
+		if (users.size() > 0) {
+			HttpSession session = req.getSession();
+			session.setAttribute("account", users.get(0));
+			// user tồn tại, login thành công
 			
-			// gán gtri cho tham số trong câu query có dấu (?): truyền tham số cho câu query
-//			statement.setString(1, email);
-//			statement.setString(2, password);
-			
-			// thực thi câu query và lấy kết quả
-			// executeQuery: Nếu như câu query là câu SELECT
-			// executeUpdate: Nếu như câu query khác SELECT -> INSERT, UPDATE, DELETE,...
-			ResultSet resultSet = statement.executeQuery(query);
-			List<User> listUser = new ArrayList<User>();
-			
-			// Khi nào resultSet mà còn qua dòng tiếp theo được thì làm
-			while(resultSet.next()) {
-				// duyệt qua từng dòng dữ liệu query được trong DB
-				User user = new User();
-				
-				// lấy dữ liệu từ cột duyệt qua đc và lưu vào thuộc tính của đối tượng user
-				user.setId(resultSet.getInt("id"));
-				user.setUserName(resultSet.getString("username"));
-				
-				listUser.add(user);
-			}
-			
-			if (listUser.size() > 0) {
-				// user tồn tại, login thành công
-				System.out.println("Đăng nhập thành công");
-			} else {
-				// user K tồn tại, login thất bại
-				System.out.println("Đăng nhập thất bại");
-			}
-		} catch (Exception e) {
-			System.out.println("Lỗi thực thi truy vấn " + e.getLocalizedMessage());
-		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			String path = req.getRequestURL().toString();
+			resp.sendRedirect(path.replaceAll("/login", ""));
+		} else {
+			req.setAttribute("isSuccess", false);
+			req.getRequestDispatcher("login.jsp").forward(req, resp);
 		}
 		
 	}

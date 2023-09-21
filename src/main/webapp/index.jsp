@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page session="false"%>
+<%@ page session="false" %>
 <html lang="en">
 
 <head>
@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" type="image/png" sizes="16x16"
-	href="plugins/images/favicon.png">
+	href="../plugins/images/favicon.png">
 <title>Pixel Admin</title>
 <!-- Bootstrap Core CSS -->
 <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -20,12 +20,19 @@
 <link
 	href="plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css"
 	rel="stylesheet">
+<!-- toast CSS -->
+<link href="plugins/bower_components/toast-master/css/jquery.toast.css"
+	rel="stylesheet">
+<!-- morris CSS -->
+<link href="plugins/bower_components/morrisjs/morris.css"
+	rel="stylesheet">
 <!-- animation CSS -->
 <link href="css/animate.css" rel="stylesheet">
 <!-- Custom CSS -->
 <link href="css/style.css" rel="stylesheet">
 <!-- color CSS -->
 <link href="css/colors/blue-dark.css" id="theme" rel="stylesheet">
+<link rel="stylesheet" href="./css/custom.css">
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -73,10 +80,10 @@
 								class="hidden-xs">Cybersoft</b>
 							</a>
 							<ul class="dropdown-menu">
-								<li><a href=<c:url value="/profile"/>>Thông tin cá nhân</a></li>
+								<li><a href="profile">Thông tin cá nhân</a></li>
 								<li><a href="#">Thống kê công việc</a></li>
 								<li class="divider"></li>
-								<li><a href=<c:url value="/login"/>>Đăng xuất</a></li>
+								<li><a href="login">Đăng xuất</a></li>
 							</ul>
 						</div>
 					</li>
@@ -90,25 +97,25 @@
 		<div class="navbar-default sidebar" role="navigation">
 			<div class="sidebar-nav navbar-collapse slimscrollsidebar">
 				<ul class="nav" id="side-menu">
-					<li style="padding: 10px 0 0;"><a href=<c:url value="/" />
+					<li style="padding: 10px 0 0;"><a href="/"
 						class="waves-effect"><i class="fa fa-clock-o fa-fw"
 							aria-hidden="true"></i><span class="hide-menu">Dashboard</span></a></li>
-					<li><a href=<c:url value="/users" /> class="waves-effect"><i
+					<li><a href="users" class="waves-effect"><i
 							class="fa fa-user fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Thành viên</span></a></li>
-					<li><a href=<c:url value="/role" /> class="waves-effect"><i
+					<li><a href="role" class="waves-effect"><i
 							class="fa fa-modx fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Quyền</span></a></li>
-					<li><a href=<c:url value="/groupwork" /> class="waves-effect"><i
+					<li><a href="groupwork" class="waves-effect"><i
 							class="fa fa-table fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Dự án</span></a></li>
-					<li><a href=<c:url value="/tasks" /> class="waves-effect"><i
+					<li><a href="tasks" class="waves-effect"><i
 							class="fa fa-table fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Công việc</span></a></li>
-					<li><a href=<c:url value="/blank" /> class="waves-effect"><i
+					<li><a href="blank" class="waves-effect"><i
 							class="fa fa-columns fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Blank Page</span></a></li>
-					<li><a href=<c:url value="/error-permission" /> class="waves-effect"><i
+					<li><a href="error-permission" class="waves-effect"><i
 							class="fa fa-info-circle fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Error 404</span></a></li>
 				</ul>
@@ -120,95 +127,115 @@
 			<div class="container-fluid">
 				<div class="row bg-title">
 					<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-						<h4 class="page-title">Thêm mới công việc</h4>
+						<h4 class="page-title">Dashboard</h4>
 					</div>
 				</div>
-				<!-- /.row -->
-				<!-- .row -->
-				<div class="row">
-					<div class="col-md-2 col-12"></div>
-					<div class="col-md-8 col-xs-12">
-						<div class="white-box">
-							<form action="<c:url value="task-add" />" method="post" class="form-horizontal form-material">
-								<div class="form-group">
-									<label class="col-md-12">Dự án</label>
-									<div class="col-md-12">
-										<select class="form-control form-control-line" name="project">
-											<c:forEach var="item" items="${ projects }">
-												<option value="${item.id}">${item.name}</option>
-											</c:forEach>
-										</select>
+				<!-- /.col-lg-12 -->
+			</div>
+			<!-- row -->
+			<div class="row">
+				<!--col -->
+				<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+					<div class="white-box">
+						<div class="col-in row">
+							<div class="col-md-6 col-sm-6 col-xs-6">
+								<i data-icon="E" class="linea-icon linea-basic"></i>
+								<h5 class="text-muted vb">CHƯA BẮT ĐẦU</h5>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-6">
+								<h3 class="counter text-right m-t-15 text-danger">23</h3>
+							</div>
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<div class="progress">
+									<div class="progress-bar progress-bar-danger"
+										role="progressbar" aria-valuenow="40" aria-valuemin="0"
+										aria-valuemax="100" style="width: 40%">
+										<span class="sr-only">40% Complete (success)</span>
 									</div>
 								</div>
-								<div class="form-group">
-									<label class="col-md-12">Tên công việc</label>
-									<div class="col-md-12">
-										<input type="text" placeholder="Tên công việc" name="name"
-											class="form-control form-control-line">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-md-12">Nội dung</label>
-									<div class="col-md-12">
-										<input type="text" placeholder="Nội dung" name="content"
-											class="form-control form-control-line">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-md-12">Người thực hiện</label>
-									<div class="col-md-12">
-										<select class="form-control form-control-line" name="user">
-											<c:forEach var="item" items="${ users }">
-												<option value="${item.id}">${item.fullName}</option>
-											</c:forEach>
-										</select>
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-md-12">Ngày bắt đầu</label>
-									<div class="col-md-12">
-										<input type="text" placeholder="yyyy-MM-dd" name="startDate"
-											class="form-control form-control-line">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-md-12">Ngày kết thúc</label>
-									<div class="col-md-12">
-										<input type="text" placeholder="yyyy-MM-dd" name="endDate"
-											class="form-control form-control-line">
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-sm-12">
-										<button type="submit" class="btn btn-success">Lưu lại</button>
-										<a href=<c:url value="tasks" /> class="btn btn-primary">Quay lại</a>
-									</div>
-								</div>
-							</form>
-							
-							<c:if test="${ isSuccess }">
-								<div class="alert alert-success" role="alert">
-								  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								  Thêm job thành công
-								</div>
-							</c:if>
-							<c:if test="${ isSuccess == false }">
-								<div class="alert alert-danger" role="alert">
-								  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								  Thêm job thất bại
-								</div>
-							</c:if>
+							</div>
 						</div>
 					</div>
-					<div class="col-md-2 col-12"></div>
 				</div>
-				<!-- /.row -->
+				<!-- /.col -->
+				<!--col -->
+				<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+					<div class="white-box">
+						<div class="col-in row">
+							<div class="col-md-6 col-sm-6 col-xs-6">
+								<i class="linea-icon linea-basic" data-icon="&#xe01b;"></i>
+								<h5 class="text-muted vb">ĐANG THỰC HIỆN</h5>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-6">
+								<h3 class="counter text-right m-t-15 text-megna">169</h3>
+							</div>
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<div class="progress">
+									<div class="progress-bar progress-bar-megna" role="progressbar"
+										aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"
+										style="width: 40%">
+										<span class="sr-only">40% Complete (success)</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /.col -->
+				<!--col -->
+				<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+					<div class="white-box">
+						<div class="col-in row">
+							<div class="col-md-6 col-sm-6 col-xs-6">
+								<i class="linea-icon linea-basic" data-icon="&#xe00b;"></i>
+								<h5 class="text-muted vb">ĐÃ HOÀN THÀNH</h5>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-6">
+								<h3 class="counter text-right m-t-15 text-primary">157</h3>
+							</div>
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<div class="progress">
+									<div class="progress-bar progress-bar-primary"
+										role="progressbar" aria-valuenow="40" aria-valuemin="0"
+										aria-valuemax="100" style="width: 40%">
+										<span class="sr-only">40% Complete (success)</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /.col -->
 			</div>
-			<!-- /.container-fluid -->
-			<footer class="footer text-center"> 2018 &copy; myclass.com
-			</footer>
+			<!-- /.row -->
+			<!--row -->
+			<div class="row">
+				<div class="col-md-12">
+					<div class="white-box">
+						<h3 class="box-title">Sales Difference</h3>
+						<ul class="list-inline text-right">
+							<li>
+								<h5>
+									<i class="fa fa-circle m-r-5" style="color: #dadada;"></i>Site
+									A View
+								</h5>
+							</li>
+							<li>
+								<h5>
+									<i class="fa fa-circle m-r-5" style="color: #aec9cb;"></i>Site
+									B View
+								</h5>
+							</li>
+						</ul>
+						<div id="morris-area-chart2" style="height: 370px;"></div>
+					</div>
+				</div>
+			</div>
 		</div>
-		<!-- /#page-wrapper -->
+		<!-- /.container-fluid -->
+		<footer class="footer text-center"> 2018 &copy; myclass.com </footer>
+	</div>
+	<!-- /#page-wrapper -->
 	</div>
 	<!-- /#wrapper -->
 	<!-- jQuery -->
@@ -222,8 +249,18 @@
 	<script src="js/jquery.slimscroll.js"></script>
 	<!--Wave Effects -->
 	<script src="js/waves.js"></script>
+	<!--Counter js -->
+	<script
+		src="plugins/bower_components/waypoints/lib/jquery.waypoints.js"></script>
+	<script
+		src="plugins/bower_components/counterup/jquery.counterup.min.js"></script>
+	<!--Morris JavaScript -->
+	<script src="plugins/bower_components/raphael/raphael-min.js"></script>
+	<script src="plugins/bower_components/morrisjs/morris.js"></script>
 	<!-- Custom Theme JavaScript -->
 	<script src="js/custom.min.js"></script>
+	<script src="js/dashboard1.js"></script>
+	<script src="plugins/bower_components/toast-master/js/jquery.toast.js"></script>
 </body>
 
 </html>

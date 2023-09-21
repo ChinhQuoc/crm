@@ -18,7 +18,7 @@ import config.MySqlConfig;
 import entity.Role;
 import service.RoleService;
 
-@WebServlet(name = "roleController", urlPatterns = { "/role-add", "/role" })
+@WebServlet(name = "roleController", urlPatterns = { "/role-add", "/role", "/role-edit" })
 public class RoleController extends HttpServlet{
 	private RoleService roleService = new RoleService();
 	
@@ -26,7 +26,6 @@ public class RoleController extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// lấy ra đường dẫn mà người dùng đang gọi
 		String path = req.getServletPath();
-		
 		// kiểm tra đường dẫn người dùng đang gọi là đường dẫn nào để hiển thị giao diện tương ứng
 		if (path.equals("/role-add")) {
 			req.getRequestDispatcher("role-add.jsp").forward(req, resp);
@@ -36,61 +35,43 @@ public class RoleController extends HttpServlet{
 			
 			req.setAttribute("listRole", roles);
 			req.getRequestDispatcher("role-table.jsp").forward(req, resp);
+		} else if (path.equals("/role-edit")) {
+			int id = Integer.parseInt(req.getParameter("id"));
+			Role role = new Role();
+			role = roleService.findRoleById(id);
+			
+			req.setAttribute("role", role);
+			req.getRequestDispatcher("role-edit.jsp").forward(req, resp);
 		}
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String roleName = req.getParameter("role-name");
-		String desc = req.getParameter("desc");
+		String path = req.getServletPath();
 		
-		boolean isSuccess = roleService.addRole(roleName, desc);
-		
-		req.setAttribute("isSuccess", isSuccess);
-		req.getRequestDispatcher("role-add.jsp").forward(req, resp);
-		
-		// Nhận tham số nếu có
-		
-		
-		// cb câu query 
-		//String query = "INSERT INTO Role(name, description) VALUES('" + roleName +"', '" + desc +"')";
-		
-		// Mở kết nối tới CSDL
-		//Connection connection = MySqlConfig.getConnection();
-		//boolean isSuccess = false;
-		
-		/*
-		 * try { PreparedStatement statement = connection.prepareStatement(query);
-		 * 
-		 * int count = statement.executeUpdate();
-		 * 
-		 * if (count > 0) { isSuccess = true;
-		 * System.out.println("Thêm role thành công"); } else {
-		 * System.out.println("Thêm role thất bại"); } } catch (SQLException e) { //
-		 * TODO: handle exception e.printStackTrace(); } finally { try {
-		 * connection.close(); } catch (SQLException e) { // TODO Auto-generated catch
-		 * block e.printStackTrace(); } }
-		 */
-	}
-	
-	private List<Role> getAllRole() throws SQLException {
-		String query = "SELECT * FROM Role";
-		Connection connection = MySqlConfig.getConnection();
-		
-		PreparedStatement statement = connection.prepareStatement(query);
-		ResultSet resultSet = statement.executeQuery(query);
-		
-		List<Role> roles = new ArrayList<Role>();
-		
-		while (resultSet.next()) {
-			Role role = new Role();
-			role.setId(resultSet.getInt("id"));
-			role.setName(resultSet.getString("name"));
-			role.setDescription(resultSet.getString("description"));
+		if (path.equals("/role-edit")) {
+			int id = Integer.parseInt(req.getParameter("id"));
+			String roleName = req.getParameter("role-name");
+			String desc = req.getParameter("desc");
 			
-			roles.add(role);
+			Role role = new Role(id, roleName, desc);
+			
+			boolean isSuccess = roleService.editRole(role);
+			req.setAttribute("isSuccess", isSuccess);
+			
+			// get info role after edited
+			role = new Role();
+			role = roleService.findRoleById(id);
+			req.setAttribute("role", role);
+			req.getRequestDispatcher("role-edit.jsp").forward(req, resp);
+		} else if (path.equals("/role-add")) {
+			String roleName = req.getParameter("role-name");
+			String desc = req.getParameter("desc");
+			
+			boolean isSuccess = roleService.addRole(roleName, desc);
+			
+			req.setAttribute("isSuccess", isSuccess);
+			req.getRequestDispatcher("role-add.jsp").forward(req, resp);
 		}
-		
-		return roles;
 	}
 }

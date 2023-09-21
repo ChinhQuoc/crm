@@ -10,7 +10,15 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private Role role;
+	private String fullName;
+	private String image;
 	
+	public String getFullName() {
+		return fullName;
+	}
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
 	public Role getRole() {
 		return role;
 	}
@@ -52,5 +60,11 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
 	}
 }

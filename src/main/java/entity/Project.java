@@ -3,10 +3,17 @@ package entity;
 import java.util.Date;
 
 public class Project {
+	private int id;
 	private String name;
 	private Date startDate;
 	private Date endDate;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}

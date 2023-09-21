@@ -129,7 +129,7 @@
 					<div class="col-md-4 col-xs-12">
 						<div class="white-box">
 							<div class="user-bg">
-								<img width="100%" alt="user" src="${user.image != null ? user.image : "\plugins/images/large/img1.jpg\"}">
+								<img width="100%" alt="user" src="<c:url value='${ user.image != null ? user.image : ("plugins/images/large/img1.jpg") }' />">
 								<div class="overlay-box">
 									<div class="user-content">
 										<a href="javascript:void(0)"><img
@@ -238,26 +238,27 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>1</td>
-											<td>Phân tích dự án</td>
-											<td>Dự án CRM</td>
-											<td>22/05/2019</td>
-											<td>30/05/2019</td>
-											<td>Đã hoàn thành</td>
-											<td><a href="profile-edit.html"
-												class="btn btn-sm btn-primary">Cập nhật</a></td>
-										</tr>
-										<tr>
-											<td>1</td>
-											<td>Thiết kế database</td>
-											<td>Dự án CRM</td>
-											<td>22/05/2019</td>
-											<td>30/05/2019</td>
-											<td>Đang thực hiện</td>
-											<td><a href="profile-edit.html"
-												class="btn btn-sm btn-primary">Cập nhật</a></td>
-										</tr>
+										<c:choose>
+											<c:when test="${jobs == null}">
+												<tr>
+													<td colspan="7">Không có job nào</td>
+												</tr>
+											</c:when>
+											<c:otherwise>
+												<c:forEach var="item" items="${jobs}" varStatus="position">
+													<tr>
+														<td>${ (position.index + 1) }</td>
+														<td>${ item.name }</td>
+														<td>${ item.nameProject }</td>
+														<td>${ item.startDate }</td>
+														<td>${ item.endDate }</td>
+														<td>${ item.status }</td>
+														<td><a href=<c:url value="/profile-edit" />
+															class="btn btn-sm btn-primary">Cập nhật</a></td>
+													</tr>
+												</c:forEach>
+											</c:otherwise>
+										</c:choose>
 									</tbody>
 								</table>
 							</div>

@@ -18,6 +18,15 @@
 			<div class="col-md-5 m-auto mt-5">
 				<h3 class="text-center">ĐĂNG NHẬP HỆ THỐNG</h3>
 				<div class="p-4 border mt-4">
+					<c:if test="${isSuccess == false}">
+						<div class="alert alert-danger" role="alert">
+							<button type="button" class="close" data-dismiss="alert"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							Thông tin đăng nhập sai
+						</div>
+					</c:if>
 					<form action="http://localhost:8080/crm_project/login"
 						method="post">
 						<div class="form-group">
