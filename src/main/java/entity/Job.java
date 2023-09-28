@@ -13,6 +13,7 @@ public class Job {
 	private String content;
 	private int idProject;
 	private int idUser;
+	private int idStatus;
 	
 	public int getId() {
 		return id;
@@ -73,5 +74,11 @@ public class Job {
 	}
 	public void setIdUser(int idUser) {
 		this.idUser = idUser;
+	}
+	public int getIdStatus() {
+		return idStatus;
+	}
+	public void setIdStatus(int idStatus) {
+		this.idStatus = idStatus;
 	}
 }

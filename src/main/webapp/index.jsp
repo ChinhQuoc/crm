@@ -30,6 +30,7 @@
 <link href="css/animate.css" rel="stylesheet">
 <!-- Custom CSS -->
 <link href="css/style.css" rel="stylesheet">
+<link href="css/button-logout.css" rel="stylesheet">
 <!-- color CSS -->
 <link href="css/colors/blue-dark.css" id="theme" rel="stylesheet">
 <link rel="stylesheet" href="./css/custom.css">
@@ -55,7 +56,7 @@
 					data-target=".navbar-collapse"> <i class="fa fa-bars"></i>
 				</a>
 				<div class="top-left-part">
-					<a class="logo" href="index.html"> <b> <img
+					<a class="logo" href=<c:url value="/" />> <b> <img
 							src="plugins/images/pixeladmin-logo.png" alt="home" />
 					</b> <span class="hidden-xs"> <img
 							src="plugins/images/pixeladmin-text.png" alt="home" />
@@ -80,10 +81,10 @@
 								class="hidden-xs">Cybersoft</b>
 							</a>
 							<ul class="dropdown-menu">
-								<li><a href="profile">Thông tin cá nhân</a></li>
-								<li><a href="#">Thống kê công việc</a></li>
+								<li><a href=<c:url value="/profile"/>>Thông tin cá nhân</a></li>
+								<li><a href=<c:url value="/tasks-user"/>>Thống kê công việc</a></li>
 								<li class="divider"></li>
-								<li><a href="login">Đăng xuất</a></li>
+								<li><button class="btn-logout" data-toggle="modal" data-target="#modalLogout">Đăng xuất</button></li>
 							</ul>
 						</div>
 					</li>
@@ -97,25 +98,25 @@
 		<div class="navbar-default sidebar" role="navigation">
 			<div class="sidebar-nav navbar-collapse slimscrollsidebar">
 				<ul class="nav" id="side-menu">
-					<li style="padding: 10px 0 0;"><a href="/"
+					<li style="padding: 10px 0 0;"><a href=<c:url value="/" />
 						class="waves-effect"><i class="fa fa-clock-o fa-fw"
 							aria-hidden="true"></i><span class="hide-menu">Dashboard</span></a></li>
-					<li><a href="users" class="waves-effect"><i
+					<li><a href=<c:url value="/users" /> class="waves-effect"><i
 							class="fa fa-user fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Thành viên</span></a></li>
-					<li><a href="role" class="waves-effect"><i
+					<li><a href=<c:url value="/role" /> class="waves-effect"><i
 							class="fa fa-modx fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Quyền</span></a></li>
-					<li><a href="groupwork" class="waves-effect"><i
+					<li><a href=<c:url value="/groupwork" /> class="waves-effect"><i
 							class="fa fa-table fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Dự án</span></a></li>
-					<li><a href="tasks" class="waves-effect"><i
+					<li><a href=<c:url value="/tasks" /> class="waves-effect"><i
 							class="fa fa-table fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Công việc</span></a></li>
-					<li><a href="blank" class="waves-effect"><i
+					<li><a href=<c:url value="/blank" /> class="waves-effect"><i
 							class="fa fa-columns fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Blank Page</span></a></li>
-					<li><a href="error-permission" class="waves-effect"><i
+					<li><a href=<c:url value="/error-permission" /> class="waves-effect"><i
 							class="fa fa-info-circle fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Error 404</span></a></li>
 				</ul>
@@ -143,14 +144,14 @@
 								<h5 class="text-muted vb">CHƯA BẮT ĐẦU</h5>
 							</div>
 							<div class="col-md-6 col-sm-6 col-xs-6">
-								<h3 class="counter text-right m-t-15 text-danger">23</h3>
+								<h3 class="counter text-right m-t-15 text-danger">${ hasntStated }</h3>
 							</div>
 							<div class="col-md-12 col-sm-12 col-xs-12">
 								<div class="progress">
 									<div class="progress-bar progress-bar-danger"
 										role="progressbar" aria-valuenow="40" aria-valuemin="0"
-										aria-valuemax="100" style="width: 40%">
-										<span class="sr-only">40% Complete (success)</span>
+										aria-valuemax="100" style="width: ${ percentHasntStated }%">
+										<span class="sr-only">"${ percentHasntStated }"% Complete (success)</span>
 									</div>
 								</div>
 							</div>
@@ -167,14 +168,14 @@
 								<h5 class="text-muted vb">ĐANG THỰC HIỆN</h5>
 							</div>
 							<div class="col-md-6 col-sm-6 col-xs-6">
-								<h3 class="counter text-right m-t-15 text-megna">169</h3>
+								<h3 class="counter text-right m-t-15 text-megna">${ starting }</h3>
 							</div>
 							<div class="col-md-12 col-sm-12 col-xs-12">
 								<div class="progress">
 									<div class="progress-bar progress-bar-megna" role="progressbar"
 										aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"
-										style="width: 40%">
-										<span class="sr-only">40% Complete (success)</span>
+										style="width: ${ percentStarting }%">
+										<span class="sr-only">"${ percentStarting }"% Complete (success)</span>
 									</div>
 								</div>
 							</div>
@@ -191,14 +192,14 @@
 								<h5 class="text-muted vb">ĐÃ HOÀN THÀNH</h5>
 							</div>
 							<div class="col-md-6 col-sm-6 col-xs-6">
-								<h3 class="counter text-right m-t-15 text-primary">157</h3>
+								<h3 class="counter text-right m-t-15 text-primary">${ started }</h3>
 							</div>
 							<div class="col-md-12 col-sm-12 col-xs-12">
 								<div class="progress">
 									<div class="progress-bar progress-bar-primary"
 										role="progressbar" aria-valuenow="40" aria-valuemin="0"
-										aria-valuemax="100" style="width: 40%">
-										<span class="sr-only">40% Complete (success)</span>
+										aria-valuemax="100" style="width: ${ percentStarted }%">
+										<span class="sr-only">"${ percentStarted }"% Complete (success)</span>
 									</div>
 								</div>
 							</div>
@@ -231,10 +232,28 @@
 					</div>
 				</div>
 			</div>
+		
+			<!-- Modal Logout-->
+			<div class="modal fade" id="modalLogout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="myModalLabel">Notification</h4>
+			      </div>
+			      <div class="modal-body">
+			        Are you sure want to logout?
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+			        <button type="button" class="btn btn-primary btn-yes">Yes</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
 		</div>
 		<!-- /.container-fluid -->
 		<footer class="footer text-center"> 2018 &copy; myclass.com </footer>
-	</div>
 	<!-- /#page-wrapper -->
 	</div>
 	<!-- /#wrapper -->
@@ -261,6 +280,8 @@
 	<script src="js/custom.min.js"></script>
 	<script src="js/dashboard1.js"></script>
 	<script src="plugins/bower_components/toast-master/js/jquery.toast.js"></script>
+	<!-- import file logout -->
+	<script type="text/javascript" src="js/logout.js"></script>
 </body>
 
 </html>

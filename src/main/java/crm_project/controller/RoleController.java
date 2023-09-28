@@ -37,10 +37,8 @@ public class RoleController extends HttpServlet{
 			req.getRequestDispatcher("role-table.jsp").forward(req, resp);
 		} else if (path.equals("/role-edit")) {
 			int id = Integer.parseInt(req.getParameter("id"));
-			Role role = new Role();
-			role = roleService.findRoleById(id);
 			
-			req.setAttribute("role", role);
+			setRole(req, id);
 			req.getRequestDispatcher("role-edit.jsp").forward(req, resp);
 		}
 	}
@@ -48,30 +46,30 @@ public class RoleController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path = req.getServletPath();
+		String roleName = req.getParameter("role-name");
+		String desc = req.getParameter("desc");
 		
 		if (path.equals("/role-edit")) {
 			int id = Integer.parseInt(req.getParameter("id"));
-			String roleName = req.getParameter("role-name");
-			String desc = req.getParameter("desc");
-			
 			Role role = new Role(id, roleName, desc);
 			
 			boolean isSuccess = roleService.editRole(role);
 			req.setAttribute("isSuccess", isSuccess);
 			
 			// get info role after edited
-			role = new Role();
-			role = roleService.findRoleById(id);
-			req.setAttribute("role", role);
+			setRole(req, id);
 			req.getRequestDispatcher("role-edit.jsp").forward(req, resp);
 		} else if (path.equals("/role-add")) {
-			String roleName = req.getParameter("role-name");
-			String desc = req.getParameter("desc");
-			
 			boolean isSuccess = roleService.addRole(roleName, desc);
 			
 			req.setAttribute("isSuccess", isSuccess);
 			req.getRequestDispatcher("role-add.jsp").forward(req, resp);
 		}
+	}
+	
+	private void setRole(HttpServletRequest req, int id) {
+		Role role = new Role();
+		role = roleService.findRoleById(id);
+		req.setAttribute("role", role);
 	}
 }

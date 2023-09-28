@@ -35,4 +35,9 @@ public class GroupWorkService {
 		int count = groupWorkRepository.deleteById(id);
 		return count > 0;
 	}
+	
+	public boolean editStatus(int id, int idStatus) {
+		int count = groupWorkRepository.updateStatus(id, idStatus);
+		return count > 0;
+	}
 }

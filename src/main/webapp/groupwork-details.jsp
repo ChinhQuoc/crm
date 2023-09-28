@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page session="false" %>
+<%@ page session="false"%>
 <!--
 This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
@@ -30,6 +30,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <link href="css/animate.css" rel="stylesheet">
 <!-- Custom CSS -->
 <link href="css/style.css" rel="stylesheet">
+<link rel="stylesheet" href="./css/custom.css">
 <!-- color CSS you can use different color css from css/colors folder -->
 <!-- We have chosen the skin-blue (blue.css) for this starter
           page. However, you can choose any other skin from folder css / colors .
@@ -58,7 +59,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 					data-target=".navbar-collapse"> <i class="fa fa-bars"></i>
 				</a>
 				<div class="top-left-part">
-					<a class="logo" href="index.html"> <b> <img
+					<a class="logo" href=<c:url value="/" />> <b> <img
 							src="plugins/images/pixeladmin-logo.png" alt="home" />
 					</b> <span class="hidden-xs"> <img
 							src="plugins/images/pixeladmin-text.png" alt="home" />
@@ -84,9 +85,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							</a>
 							<ul class="dropdown-menu">
 								<li><a href=<c:url value="/profile"/>>Thông tin cá nhân</a></li>
-								<li><a href="#">Thống kê công việc</a></li>
+								<li><a href=<c:url value="/tasks-user"/>>Thống kê công việc</a></li>
 								<li class="divider"></li>
-								<li><a href=<c:url value="/login" />>Đăng xuất</a></li>
+								<li><button class="btn-logout" data-toggle="modal"
+										data-target="#modalLogout">Đăng xuất</button></li>
 							</ul>
 						</div>
 					</li>
@@ -118,9 +120,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 					<li><a href=<c:url value="/blank" /> class="waves-effect"><i
 							class="fa fa-columns fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Blank Page</span></a></li>
-					<li><a href=<c:url value="/error-permission" /> class="waves-effect"><i
-							class="fa fa-info-circle fa-fw" aria-hidden="true"></i><span
-							class="hide-menu">Error 404</span></a></li>
+					<li><a href=<c:url value="/error-permission" />
+						class="waves-effect"><i class="fa fa-info-circle fa-fw"
+							aria-hidden="true"></i><span class="hide-menu">Error 404</span></a></li>
 				</ul>
 			</div>
 		</div>
@@ -151,13 +153,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									<h5 class="text-muted vb">CHƯA BẮT ĐẦU</h5>
 								</div>
 								<div class="col-md-6 col-sm-6 col-xs-6">
-									<h3 class="counter text-right m-t-15 text-danger">20%</h3>
+									<h3 class="counter text-right m-t-15 text-danger">${ hasntStated }%</h3>
 								</div>
 								<div class="col-md-12 col-sm-12 col-xs-12">
 									<div class="progress">
 										<div class="progress-bar progress-bar-danger"
 											role="progressbar" aria-valuenow="40" aria-valuemin="0"
-											aria-valuemax="100" style="width: 20%"></div>
+											aria-valuemax="100" style="width: ${hasntStated}%"></div>
 									</div>
 								</div>
 							</div>
@@ -173,13 +175,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									<h5 class="text-muted vb">ĐANG THỰC HIỆN</h5>
 								</div>
 								<div class="col-md-6 col-sm-6 col-xs-6">
-									<h3 class="counter text-right m-t-15 text-megna">50%</h3>
+									<h3 class="counter text-right m-t-15 text-megna">${ starting }%</h3>
 								</div>
 								<div class="col-md-12 col-sm-12 col-xs-12">
 									<div class="progress">
 										<div class="progress-bar progress-bar-megna"
 											role="progressbar" aria-valuenow="40" aria-valuemin="0"
-											aria-valuemax="100" style="width: 50%"></div>
+											aria-valuemax="100" style="width: ${starting}%"></div>
 									</div>
 								</div>
 							</div>
@@ -195,13 +197,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									<h5 class="text-muted vb">HOÀN THÀNH</h5>
 								</div>
 								<div class="col-md-6 col-sm-6 col-xs-6">
-									<h3 class="counter text-right m-t-15 text-primary">30%</h3>
+									<h3 class="counter text-right m-t-15 text-primary">${ started }%</h3>
 								</div>
 								<div class="col-md-12 col-sm-12 col-xs-12">
 									<div class="progress">
 										<div class="progress-bar progress-bar-primary"
 											role="progressbar" aria-valuenow="40" aria-valuemin="0"
-											aria-valuemax="100" style="width: 30%"></div>
+											aria-valuemax="100" style="width: ${started}%"></div>
 									</div>
 								</div>
 							</div>
@@ -213,142 +215,89 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 				<!-- BEGIN DANH SÁCH CÔNG VIỆC -->
 				<div class="row">
-					<div class="col-xs-12">
-						<a href="#" class="group-title"> <img width="30"
-							src="plugins/images/users/pawandeep.jpg" class="img-circle" /> <span>Pavan
-								kumar</span>
-						</a>
-					</div>
-					<div class="col-md-4">
-						<div class="white-box">
-							<h3 class="box-title">Chưa thực hiện</h3>
-							<div class="message-center">
-								<a href="#">
-									<div class="mail-contnet">
-										<h5>Pavan kumar</h5>
-										<span class="mail-desc">Just see the my admin!</span> <span
-											class="time">9:30 AM</span>
-									</div>
-								</a> <a href="#">
-									<div class="mail-contnet">
-										<h5>Sonu Nigam</h5>
-										<span class="mail-desc">I've sung a song! See you at</span> <span
-											class="time">9:10 AM</span>
-									</div>
-								</a>
+					<c:forEach var="item" items="${users}">
+						<div class="col-xs-12">
+							<a href="#" class="group-title"> <img width="30"
+								src="${ item.image != null ? item.image : 'plugins/images/users/pawandeep.jpg'}" class="img-circle" />
+								<span>${ item.fullName }</span>
+							</a>
+						</div>
+						<div class="col-md-4">
+							<div class="white-box">
+								<h3 class="box-title">Chưa thực hiện</h3>
+								<div class="message-center">
+									<c:forEach var="job" items="${item.hasntStartedJobs}">
+										<a href="#">
+											<div class="mail-contnet">
+												<h5>${ job.name }</h5>
+												<span class="mail-desc">${ job.content }</span>
+												<span class="time">Bắt đầu: ${ job.startDate }</span> 
+												<span class="time">Kết thúc: ${ job.endDate }</span>
+											</div>
+										</a>
+									</c:forEach>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="white-box">
-							<h3 class="box-title">Đang thực hiện</h3>
-							<div class="message-center">
-								<a href="#">
-									<div class="mail-contnet">
-										<h5>Pavan kumar</h5>
-										<span class="mail-desc">Just see the my admin!</span> <span
-											class="time">9:30 AM</span>
-									</div>
-								</a> <a href="#">
-									<div class="mail-contnet">
-										<h5>Sonu Nigam</h5>
-										<span class="mail-desc">I've sung a song! See you at</span> <span
-											class="time">9:10 AM</span>
-									</div>
-								</a>
+						<div class="col-md-4">
+							<div class="white-box">
+								<h3 class="box-title">Đang thực hiện</h3>
+								<div class="message-center">
+									<c:forEach var="job" items="${item.startingJobs}">
+										<a href="#">
+											<div class="mail-contnet">
+												<h5>${ job.name }</h5>
+												<span class="mail-desc">${ job.content }</span>
+												<span class="time">Bắt đầu: ${ job.startDate }</span> 
+												<span class="time">Kết thúc: ${ job.endDate }</span>
+											</div>
+										</a>
+									</c:forEach>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="white-box">
-							<h3 class="box-title">Đã hoàn thành</h3>
-							<div class="message-center">
-								<a href="#">
-									<div class="mail-contnet">
-										<h5>Pavan kumar</h5>
-										<span class="mail-desc">Just see the my admin!</span> <span
-											class="time">9:30 AM</span>
-									</div>
-								</a> <a href="#">
-									<div class="mail-contnet">
-										<h5>Sonu Nigam</h5>
-										<span class="mail-desc">I've sung a song! See you at</span> <span
-											class="time">9:10 AM</span>
-									</div>
-								</a>
+						<div class="col-md-4">
+							<div class="white-box">
+								<h3 class="box-title">Đã hoàn thành</h3>
+								<div class="message-center">
+									<c:forEach var="job" items="${item.startedJobs}">
+										<a href="#">
+											<div class="mail-contnet">
+												<h5>${ job.name }</h5>
+												<span class="mail-desc">${ job.content }</span>
+												<span class="time">Bắt đầu: ${ job.startDate }</span> 
+												<span class="time">Kết thúc: ${ job.endDate }</span>
+											</div>
+										</a>
+									</c:forEach>
+								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12">
-						<a href="#" class="group-title"> <img width="30"
-							src="plugins/images/users/pawandeep.jpg" class="img-circle" /> <span>Pavan
-								kumar</span>
-						</a>
-					</div>
-					<div class="col-md-4">
-						<div class="white-box">
-							<h3 class="box-title">Chưa thực hiện</h3>
-							<div class="message-center">
-								<a href="#">
-									<div class="mail-contnet">
-										<h5>Pavan kumar</h5>
-										<span class="mail-desc">Just see the my admin!</span> <span
-											class="time">9:30 AM</span>
-									</div>
-								</a> <a href="#">
-									<div class="mail-contnet">
-										<h5>Sonu Nigam</h5>
-										<span class="mail-desc">I've sung a song! See you at</span> <span
-											class="time">9:10 AM</span>
-									</div>
-								</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="white-box">
-							<h3 class="box-title">Đang thực hiện</h3>
-							<div class="message-center">
-								<a href="#">
-									<div class="mail-contnet">
-										<h5>Pavan kumar</h5>
-										<span class="mail-desc">Just see the my admin!</span> <span
-											class="time">9:30 AM</span>
-									</div>
-								</a> <a href="#">
-									<div class="mail-contnet">
-										<h5>Sonu Nigam</h5>
-										<span class="mail-desc">I've sung a song! See you at</span> <span
-											class="time">9:10 AM</span>
-									</div>
-								</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="white-box">
-							<h3 class="box-title">Đã hoàn thành</h3>
-							<div class="message-center">
-								<a href="#">
-									<div class="mail-contnet">
-										<h5>Pavan kumar</h5>
-										<span class="mail-desc">Just see the my admin!</span> <span
-											class="time">9:30 AM</span>
-									</div>
-								</a> <a href="#">
-									<div class="mail-contnet">
-										<h5>Sonu Nigam</h5>
-										<span class="mail-desc">I've sung a song! See you at</span> <span
-											class="time">9:10 AM</span>
-									</div>
-								</a>
-							</div>
-						</div>
-					</div>
+					</c:forEach>
 				</div>
 				<!-- END DANH SÁCH CÔNG VIỆC -->
+
+				<!-- Modal Logout-->
+				<div class="modal fade" id="modalLogout" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel">Notification</h4>
+							</div>
+							<div class="modal-body">Are you sure want to logout?</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">No</button>
+								<button type="button" class="btn btn-primary btn-yes">Yes</button>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			<!-- /.container-fluid -->
 			<footer class="footer text-center"> 2018 &copy; myclass.com
@@ -370,6 +319,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<script src="js/waves.js"></script>
 	<!-- Custom Theme JavaScript -->
 	<script src="js/custom.min.js"></script>
+	<!-- import file logout -->
+	<script type="text/javascript" src="js/logout.js"></script>
 </body>
 
 </html>

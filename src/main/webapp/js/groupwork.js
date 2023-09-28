@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	$(".btn-xoa").click(function() {
-		let id = $(this).attr('id-role');
+		let id = $(this).attr('id-project');
 		let This = $(this);
 		
 		$.ajax({

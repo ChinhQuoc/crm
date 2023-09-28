@@ -24,6 +24,7 @@
 <link href="css/animate.css" rel="stylesheet">
 <!-- Custom CSS -->
 <link href="css/style.css" rel="stylesheet">
+<link href="css/button-logout.css" rel="stylesheet">
 <!-- color CSS -->
 <link href="css/colors/blue-dark.css" id="theme" rel="stylesheet">
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -48,7 +49,7 @@
 					data-target=".navbar-collapse"> <i class="fa fa-bars"></i>
 				</a>
 				<div class="top-left-part">
-					<a class="logo" href="index.html"> <b> <img
+					<a class="logo" href=<c:url value="/" />> <b> <img
 							src="plugins/images/pixeladmin-logo.png" alt="home" />
 					</b> <span class="hidden-xs"> <img
 							src="plugins/images/pixeladmin-text.png" alt="home" />
@@ -74,9 +75,9 @@
 							</a>
 							<ul class="dropdown-menu">
 								<li><a href=<c:url value="/profile"/>>Thông tin cá nhân</a></li>
-								<li><a href="#">Thống kê công việc</a></li>
+								<li><a href=<c:url value="/tasks-user"/>>Thống kê công việc</a></li>
 								<li class="divider"></li>
-								<li><a href=<c:url value="/login"/>>Đăng xuất</a></li>
+								<li><button class="btn-logout" data-toggle="modal" data-target="#modalLogout">Đăng xuất</button></li>
 							</ul>
 						</div>
 					</li>
@@ -120,7 +121,7 @@
 			<div class="container-fluid">
 				<div class="row bg-title">
 					<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-						<h4 class="page-title">Thêm mới công việc</h4>
+						<h4 class="page-title">Chỉnh sửa công việc</h4>
 					</div>
 				</div>
 				<!-- /.row -->
@@ -129,57 +130,89 @@
 					<div class="col-md-2 col-12"></div>
 					<div class="col-md-8 col-xs-12">
 						<div class="white-box">
-							<form class="form-horizontal form-material">
+							<form action="<c:url value="profile-edit?id=${ job.id }" />" method="post" class="form-horizontal form-material">
 								<div class="form-group">
 									<label class="col-md-12">Tên dự án</label>
 									<div class="col-md-12">
-										<input type="text" readonly value="Dự án CRM"
+										<input type="text" readonly value="${ job.nameProject }"
 											class="form-control form-control-line">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-12">Tên công việc</label>
 									<div class="col-md-12">
-										<input type="text" readonly value="Thiết kế database"
+										<input type="text" readonly value="${ job.name }"
 											class="form-control form-control-line">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-12">Ngày bắt đầu</label>
 									<div class="col-md-12">
-										<input type="text" readonly value="05-07/2020"
+										<input type="text" readonly value="${ job.startDate }"
 											class="form-control form-control-line">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-12">Ngày kết thúc</label>
 									<div class="col-md-12">
-										<input type="text" readonly value="17-07/2020"
+										<input type="text" readonly value="${ job.endDate }"
 											class="form-control form-control-line">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-12">Trạng thái</label>
 									<div class="col-md-12">
-										<select class="form-control form-control-line">
-											<option>Chưa thực hiện</option>
-											<option selected>Đang thực hiện</option>
-											<option>Đã hoàn thành</option>
+										<select class="form-control form-control-line" name="status">
+											<c:forEach var="item" items="${ listStatus }">
+												<option value="${item.id}" ${ item.id == job.idStatus ? 'selected' : '' }>${item.name}</option>
+											</c:forEach>
 										</select>
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="col-sm-12">
 										<button type="submit" class="btn btn-success">Lưu lại</button>
-										<a href="profile.html" class="btn btn-primary">Quay lại</a>
+										<a href="<c:url value="profile"/>" class="btn btn-primary">Quay lại</a>
 									</div>
 								</div>
 							</form>
+							
+							<c:if test="${ isSuccess }">
+								<div class="alert alert-success" role="alert">
+								  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								  Cập nhật job thành công
+								</div>
+							</c:if>
+							<c:if test="${ isSuccess == false }">
+								<div class="alert alert-success" role="alert">
+								  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								  Cập nhật job thất bại
+								</div>
+							</c:if>
 						</div>
 					</div>
 					<div class="col-md-2 col-12"></div>
 				</div>
 				<!-- /.row -->
+				
+				<!-- Modal Logout-->
+				<div class="modal fade" id="modalLogout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">Notification</h4>
+				      </div>
+				      <div class="modal-body">
+				        Are you sure want to logout?
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+				        <button type="button" class="btn btn-primary btn-yes">Yes</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 			</div>
 			<!-- /.container-fluid -->
 			<footer class="footer text-center"> 2018 &copy; myclass.com
@@ -201,6 +234,8 @@
 	<script src="js/waves.js"></script>
 	<!-- Custom Theme JavaScript -->
 	<script src="js/custom.min.js"></script>
+	<!-- import file logout -->
+	<script type="text/javascript" src="js/logout.js"></script>
 </body>
 
 </html>

@@ -119,7 +119,7 @@
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Thêm mới thành viên</h4>
+                        <h4 class="page-title">Chỉnh sửa thành viên</h4>
                     </div>
                 </div>
                 <!-- /.row -->
@@ -128,63 +128,63 @@
                     <div class="col-md-2 col-12"></div>
                     <div class="col-md-8 col-xs-12">
                         <div class="white-box">
-                            <form action="<c:url value='/user-add' />" method="post" class="form-horizontal form-material">
+                            <form action="<c:url value="/user-edit?id=${ user.id }" />" method="post" class="form-horizontal form-material">
                                 <div class="form-group">
                                     <label class="col-md-12">Full Name</label>
                                     <div class="col-md-12">
                                         <input type="text" name="fullname" placeholder="Johnathan Doe"
-                                            class="form-control form-control-line"> </div>
+                                            class="form-control form-control-line" value="${ user.fullName }"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="example-email" class="col-md-12">Email</label>
                                     <div class="col-md-12">
-                                        <input type="email" placeholder="johnathan@admin.com"
+                                        <input readonly type="email" placeholder="johnathan@admin.com"
                                             class="form-control form-control-line" name="email"
-                                            id="example-email"> </div>
+                                            id="example-email" value="${ user.email }"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Password</label>
                                     <div class="col-md-12">
-                                        <input name="password" type="password" class="form-control form-control-line">
+                                        <input readonly name="password" type="password" class="form-control form-control-line" value="${ user.password }">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">First Name</label>
                                     <div class="col-md-12">
                                         <input type="text" name="firstName" placeholder="Doe"
-                                            class="form-control form-control-line"> </div>
+                                            class="form-control form-control-line" value="${ user.firstName }"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Last Name</label>
                                     <div class="col-md-12">
                                         <input type="text" name="lastName" placeholder="Johnathan"
-                                            class="form-control form-control-line"> </div>
+                                            class="form-control form-control-line" value="${ user.lastName }"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">User Name</label>
                                     <div class="col-md-12">
                                         <input type="text" name="userName" placeholder="JohnathanDoe"
-                                            class="form-control form-control-line"> </div>
+                                            class="form-control form-control-line" value="${ user.userName }"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Phone No</label>
                                     <div class="col-md-12">
                                         <input name="phone" type="text" placeholder="123 456 7890"
-                                            class="form-control form-control-line"> </div>
+                                            class="form-control form-control-line" value="${ user.phone }"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-12">Select Role</label>
                                     <div class="col-sm-12">
                                         <select name="role" class="form-control form-control-line">
 	                                        <c:forEach var="item" items="${listRole}">
-	                                        	<option value="${item.id}">${item.name}</option>
+	                                        	<option value="${item.id}" ${ item.id == user.idRole ? 'selected' : '' }>${item.name}</option>
 	                                        </c:forEach>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <button type="submit" class="btn btn-success">Add User</button>
+                                        <button type="submit" class="btn btn-success">Update User</button>
                                         <a href=<c:url value="users" /> class="btn btn-primary">Quay lại</a>
                                     </div>
                                 </div>
@@ -193,13 +193,13 @@
                             <c:if test="${ isSuccess }">
 								<div class="alert alert-success" role="alert">
 								  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								  Thêm user thành công
+								  Cập nhật thông tin user thành công
 								</div>
 							</c:if>
 							<c:if test="${ isSuccess == false }">
 								<div class="alert alert-danger" role="alert">
 								  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								  Thêm user thất bại
+								  Cập nhật thông tin user thất bại
 								</div>
 							</c:if>
                         </div>

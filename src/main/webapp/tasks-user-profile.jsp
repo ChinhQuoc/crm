@@ -77,7 +77,8 @@
 								<li><a href=<c:url value="/profile"/>>Thông tin cá nhân</a></li>
 								<li><a href=<c:url value="/tasks-user"/>>Thống kê công việc</a></li>
 								<li class="divider"></li>
-								<li><button class="btn-logout" data-toggle="modal" data-target="#modalLogout">Đăng xuất</button></li>
+								<li><button class="btn-logout" data-toggle="modal"
+										data-target="#modalLogout">Đăng xuất</button></li>
 							</ul>
 						</div>
 					</li>
@@ -100,18 +101,18 @@
 					<li><a href=<c:url value="/role" /> class="waves-effect"><i
 							class="fa fa-modx fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Quyền</span></a></li>
-					<li><a href=<c:url value="groupwork" /> class="waves-effect"><i
+					<li><a href=<c:url value="/groupwork" /> class="waves-effect"><i
 							class="fa fa-table fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Dự án</span></a></li>
-					<li><a href=<c:url value="tasks" /> class="waves-effect"><i
+					<li><a href=<c:url value="/tasks" /> class="waves-effect"><i
 							class="fa fa-table fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Công việc</span></a></li>
-					<li><a href=<c:url value="blank" /> class="waves-effect"><i
+					<li><a href=<c:url value="/blank" /> class="waves-effect"><i
 							class="fa fa-columns fa-fw" aria-hidden="true"></i><span
 							class="hide-menu">Blank Page</span></a></li>
-					<li><a href=<c:url value="404" /> class="waves-effect"><i
-							class="fa fa-info-circle fa-fw" aria-hidden="true"></i><span
-							class="hide-menu">Error 404</span></a></li>
+					<li><a href=<c:url value="/error-permission" />
+						class="waves-effect"><i class="fa fa-info-circle fa-fw"
+							aria-hidden="true"></i><span class="hide-menu">Error 404</span></a></li>
 				</ul>
 			</div>
 		</div>
@@ -121,78 +122,160 @@
 			<div class="container-fluid">
 				<div class="row bg-title">
 					<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-						<h4 class="page-title">Chỉnh sửa quyền</h4>
+						<h4 class="page-title">Thống kê công việc</h4>
 					</div>
 				</div>
 				<!-- /.row -->
 				<!-- .row -->
 				<div class="row">
-					<div class="col-md-2 col-12"></div>
-					<div class="col-md-8 col-xs-12">
+					<!--col -->
+					<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 						<div class="white-box">
-							<form action="<c:url value="/role-edit?id=${ role.id }" />" method="post"
-								class="form-horizontal form-material">
-								<div class="form-group">
-									<label class="col-md-12">Tên quyền</label>
-									<div class="col-md-12">
-										<input type="text" name="role-name" value="${ role.name }" placeholder="Tên quyền" class="form-control form-control-line" />
+							<div class="col-in row">
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<i data-icon="E" class="linea-icon linea-basic"></i>
+									<h5 class="text-muted vb">CHƯA BẮT ĐẦU</h5>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<h3 class="counter text-right m-t-15 text-danger">${ hasntStated }</h3>
+								</div>
+								<div class="col-md-12 col-sm-12 col-xs-12">
+									<div class="progress">
+										<div class="progress-bar progress-bar-danger"
+											role="progressbar" aria-valuenow="40" aria-valuemin="0"
+											aria-valuemax="100" style="width: ${ percentHasntStated }%">
+											<span class="sr-only">"${ percentHasntStated }"%
+												Complete (success)</span>
+										</div>
 									</div>
 								</div>
-								<div class="form-group">
-									<label class="col-md-12">Mô tả</label>
-									<div class="col-md-12">
-										<input type="text" name="desc" value="${ role.description }" placeholder="Mô tả" class="form-control form-control-line" />
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-sm-12">
-										<button type="submit" class="btn btn-success">Update Role</button>
-										<a href=<c:url value="role" /> class="btn btn-primary">Quay
-											lại</a>
-									</div>
-								</div>
-							</form>
-							<c:if test="${isSuccess}">
-								<div class="alert alert-success" role="alert">
-									<button type="button" class="close" data-dismiss="alert"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-									Chỉnh sửa role thành công
-								</div>
-							</c:if>
-							<c:if test="${isSuccess == false}">
-								<div class="alert alert-success" role="alert">
-									<button type="button" class="close" data-dismiss="alert"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-									Chỉnh sửa role thất bại
-								</div>
-							</c:if>
+							</div>
 						</div>
 					</div>
-					<div class="col-md-2 col-12"></div>
+					<!-- /.col -->
+					<!--col -->
+					<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+						<div class="white-box">
+							<div class="col-in row">
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<i class="linea-icon linea-basic" data-icon="&#xe01b;"></i>
+									<h5 class="text-muted vb">ĐANG THỰC HIỆN</h5>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<h3 class="counter text-right m-t-15 text-megna">${ starting }</h3>
+								</div>
+								<div class="col-md-12 col-sm-12 col-xs-12">
+									<div class="progress">
+										<div class="progress-bar progress-bar-megna"
+											role="progressbar" aria-valuenow="40" aria-valuemin="0"
+											aria-valuemax="100" style="width: ${ percentStarting }%">
+											<span class="sr-only">"${ percentStarting }"% Complete
+												(success)</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /.col -->
+					<!--col -->
+					<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+						<div class="white-box">
+							<div class="col-in row">
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<i class="linea-icon linea-basic" data-icon="&#xe00b;"></i>
+									<h5 class="text-muted vb">ĐÃ HOÀN THÀNH</h5>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<h3 class="counter text-right m-t-15 text-primary">${ started }</h3>
+								</div>
+								<div class="col-md-12 col-sm-12 col-xs-12">
+									<div class="progress">
+										<div class="progress-bar progress-bar-primary"
+											role="progressbar" aria-valuenow="40" aria-valuemin="0"
+											aria-valuemax="100" style="width: ${ percentStarted }%">
+											<span class="sr-only">"${ percentStarted }"% Complete
+												(success)</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /.col -->
 				</div>
+
+				<br />
 				<!-- /.row -->
-				
+				<!-- BEGIN DANH SÁCH CÔNG VIỆC -->
+				<h4>DANH SÁCH CÔNG VIỆC</h4>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="white-box">
+							<div class="table-responsive">
+								<table class="table" id="example">
+									<thead>
+										<tr>
+											<th>STT</th>
+											<th>Tên Công Việc</th>
+											<th>Dự Án</th>
+											<th>Ngày Bắt Đầu</th>
+											<th>Ngày Kết Thúc</th>
+											<th>Trạng Thái</th>
+											<th>Hành Động</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:choose>
+											<c:when test="${jobs == null}">
+												<tr>
+													<td colspan="7">Không có job nào</td>
+												</tr>
+											</c:when>
+											<c:otherwise>
+												<c:forEach var="item" items="${jobs}" varStatus="position">
+													<tr>
+														<td>${ (position.index + 1) }</td>
+														<td>${ item.name }</td>
+														<td>${ item.nameProject }</td>
+														<td>${ item.startDate }</td>
+														<td>${ item.endDate }</td>
+														<td>${ item.status }</td>
+														<td><a
+															href=<c:url value="/profile-edit?id=${ item.id }" />
+															class="btn btn-sm btn-primary">Cập nhật</a></td>
+													</tr>
+												</c:forEach>
+											</c:otherwise>
+										</c:choose>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- END DANH SÁCH CÔNG VIỆC -->
+
 				<!-- Modal Logout-->
-				<div class="modal fade" id="modalLogout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-				  <div class="modal-dialog" role="document">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				        <h4 class="modal-title" id="myModalLabel">Notification</h4>
-				      </div>
-				      <div class="modal-body">
-				        Are you sure want to logout?
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-				        <button type="button" class="btn btn-primary btn-yes">Yes</button>
-				      </div>
-				    </div>
-				  </div>
+				<div class="modal fade" id="modalLogout" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel">Notification</h4>
+							</div>
+							<div class="modal-body">Are you sure want to logout?</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">No</button>
+								<button type="button" class="btn btn-primary btn-yes">Yes</button>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 			<!-- /.container-fluid -->
@@ -218,4 +301,5 @@
 	<!-- import file logout -->
 	<script type="text/javascript" src="js/logout.js"></script>
 </body>
+
 </html>

@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.List;
+
 // entity: là nơi khai báo ra các class đặt tên và thuộc tính giống với lại tên bảng trong BD
 // Nếu cột là khóa ngoại thì k khai báo biến mà sẽ chuyển thành đối tượng của bảng được tham chiếu tới
 public class User {
@@ -12,6 +14,11 @@ public class User {
 	private Role role;
 	private String fullName;
 	private String image;
+	private String phone;
+	private int idRole;
+	private List<Job> hasntStartedJobs;
+	private List<Job> startingJobs;
+	private List<Job> startedJobs;
 	
 	public String getFullName() {
 		return fullName;
@@ -66,5 +73,35 @@ public class User {
 	}
 	public void setImage(String image) {
 		this.image = image;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public int getIdRole() {
+		return idRole;
+	}
+	public void setIdRole(int idRole) {
+		this.idRole = idRole;
+	}
+	public List<Job> getHasntStartedJobs() {
+		return hasntStartedJobs;
+	}
+	public void setHasntStartedJobs(List<Job> hasntStartedJobs) {
+		this.hasntStartedJobs = hasntStartedJobs;
+	}
+	public List<Job> getStartingJobs() {
+		return startingJobs;
+	}
+	public void setStartingJobs(List<Job> startingJobs) {
+		this.startingJobs = startingJobs;
+	}
+	public List<Job> getStartedJobs() {
+		return startedJobs;
+	}
+	public void setStartedJobs(List<Job> startedJobs) {
+		this.startedJobs = startedJobs;
 	}
 }

@@ -26,6 +26,7 @@
 <link href="css/animate.css" rel="stylesheet">
 <!-- Custom CSS -->
 <link href="css/style.css" rel="stylesheet">
+<link href="css/button-logout.css" rel="stylesheet">
 <!-- color CSS -->
 <link href="css/colors/blue-dark.css" id="theme" rel="stylesheet">
 <link rel="stylesheet" href="./css/custom.css">
@@ -51,7 +52,7 @@
 					data-target=".navbar-collapse"> <i class="fa fa-bars"></i>
 				</a>
 				<div class="top-left-part">
-					<a class="logo" href="index.html"> <b> <img
+					<a class="logo" href=<c:url value="/" />> <b> <img
 							src="plugins/images/pixeladmin-logo.png" alt="home" />
 					</b> <span class="hidden-xs"> <img
 							src="plugins/images/pixeladmin-text.png" alt="home" />
@@ -77,9 +78,9 @@
 							</a>
 							<ul class="dropdown-menu">
 								<li><a href=<c:url value="/profile"/>>Thông tin cá nhân</a></li>
-								<li><a href="#">Thống kê công việc</a></li>
+								<li><a href=<c:url value="/tasks-user"/>>Thống kê công việc</a></li>
 								<li class="divider"></li>
-								<li><a href=<c:url value="/login"/>>Đăng xuất</a></li>
+								<li><button class="btn-logout" data-toggle="modal" data-target="#modalLogout">Đăng xuất</button></li>
 							</ul>
 						</div>
 					</li>
@@ -173,6 +174,25 @@
 					</div>
 				</div>
 				<!-- /.row -->
+				
+				<!-- Modal Logout-->
+				<div class="modal fade" id="modalLogout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">Notification</h4>
+				      </div>
+				      <div class="modal-body">
+				        Are you sure want to logout?
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+				        <button type="button" class="btn btn-primary btn-yes">Yes</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 			</div>
 			<!-- /.container-fluid -->
 			<footer class="footer text-center"> 2018 &copy; myclass.com
@@ -195,12 +215,9 @@
 	<script src="js/waves.js"></script>
 	<!-- Custom Theme JavaScript -->
 	<script src="js/custom.min.js"></script>
-	<script>
-		$(document).ready(function() {
-			$('#example').DataTable();
-		});
-	</script>
 	<script type="text/javascript" src="js/role-table.js"></script>
+	<!-- import file logout -->
+	<script type="text/javascript" src="js/logout.js"></script>
 </body>
 
 </html>

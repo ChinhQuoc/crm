@@ -174,4 +174,27 @@ public class GroupWorkRepository {
 		
 		return count;
 	}
+	
+	public int updateStatus(int id, int idStatus) {
+		String query = "UPDATE Job_Status_Users SET id_status = "+ idStatus +" WHERE id_job = "+ id;
+		Connection conn = MySqlConfig.getConnection();
+		int count = 0;
+		
+		try {
+			PreparedStatement statement = conn.prepareStatement(query);
+			count = statement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Lỗi cập nhật groupwork " + e.getLocalizedMessage());
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return count;
+	}
 }

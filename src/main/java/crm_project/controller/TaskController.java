@@ -58,32 +58,24 @@ public class TaskController extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path = req.getServletPath();
 		
+		String name = req.getParameter("name");
+		String content = req.getParameter("content");
+		String startDate = req.getParameter("startDate");
+		String endDate = req.getParameter("endDate");
+		
+		int idUser = Integer.parseInt(req.getParameter("user"));
+		int idProject = Integer.parseInt(req.getParameter("project"));
+		
 		if (path.equals("/task-add")) {
-			String name = req.getParameter("name");
-			String content = req.getParameter("content");
-			String startDate = req.getParameter("startDate");
-			String enđate = req.getParameter("endDate");
-			
-			int idUser = Integer.parseInt(req.getParameter("user"));
-			int idProject = Integer.parseInt(req.getParameter("project"));
-			
-			boolean isSuccess = jobService.addJob(name, content, startDate, enđate, idProject, idUser);
-			
+			boolean isSuccess = jobService.addJob(name, content, startDate, endDate, idProject, idUser);
 			req.setAttribute("isSuccess", isSuccess);
 			
 			prepareData(req);
 			req.getRequestDispatcher("task-add.jsp").forward(req, resp);
 		} else if (path.equals("/task-edit")) {
-			String name = req.getParameter("name");
-			String content = req.getParameter("content");
-			String startDate = req.getParameter("startDate");
-			String endDate = req.getParameter("endDate");
 			int id = Integer.parseInt(req.getParameter("id"));
-			int idUser = Integer.parseInt(req.getParameter("user"));
-			int idProject = Integer.parseInt(req.getParameter("project"));
 			
 			boolean isSuccess = jobService.updateJob(id, name, content, startDate, endDate, idProject, idUser, exIdProject, exIdUser);
-			
 			req.setAttribute("isSuccess", isSuccess);
 			
 			Job job = new Job();

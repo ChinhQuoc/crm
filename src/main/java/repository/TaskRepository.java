@@ -13,7 +13,7 @@ import entity.Job;
 
 public class TaskRepository {
 	public List<Job> findAll() {
-		String query = "SELECT j.id, j.name, j.startDate, j.endDate, p.name as nameProject, s.name as status, u.fullName as username FROM Job j"
+		String query = "SELECT j.id, j.name, j.startDate, j.endDate, p.name as nameProject, s.name as status, jsu.id_status as idStatus, u.id as idUser, u.fullName as username FROM Job j"
 				+ "	JOIN Job_Status_Users jsu ON j.id = jsu.id_job" + "	JOIN Project p ON j.id_project = p.id"
 				+ "	JOIN Status s ON s.id = jsu.id_status" + " JOIN Users u ON u.id = jsu.id_user";
 		Connection connection = MySqlConfig.getConnection();
@@ -32,6 +32,8 @@ public class TaskRepository {
 				job.setNameProject(resultSet.getString("nameProject"));
 				job.setStatus(resultSet.getString("status"));
 				job.setNameUser(resultSet.getString("username"));
+				job.setIdStatus(resultSet.getInt("idStatus"));
+				job.setIdUser(resultSet.getInt("idUser"));
 
 				listJob.add(job);
 			}
@@ -51,15 +53,15 @@ public class TaskRepository {
 
 	}
 
-	public int insert(String name, String content, String startDate, String endDate, int idProject, int idUser) {
+	public boolean insert(String name, String content, String startDate, String endDate, int idProject, int idUser) {
+		boolean isSuccess = false;
 		String query = "{call sp_createJob('" + name + "', '" + content + "', '" + startDate + "', '" + endDate + "', "
 				+ idProject + ", " + idUser + ")}";
 		Connection conn = MySqlConfig.getConnection();
-		int count = 0;
 
 		try {
 			CallableStatement statement = conn.prepareCall(query);
-			count = statement.executeUpdate();
+			isSuccess = statement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Lỗi tạo job " + e.getLocalizedMessage());
@@ -72,11 +74,11 @@ public class TaskRepository {
 			}
 		}
 
-		return count;
+		return isSuccess;
 	}
 
 	public Job findById(int id) {
-		String query = "SELECT j.id, j.name, j.content, j.startDate, j.endDate, p.name as nameProject, p.id as idProject, u.fullName as username, u.id as idUser FROM Job j"
+		String query = "SELECT j.id, j.name, j.content, j.startDate, j.endDate, p.name as nameProject, p.id as idProject, u.fullName as username, u.id as idUser, jsu.id_status as idStatus FROM Job j"
 				+ "	JOIN Job_Status_Users jsu ON j.id = jsu.id_job" + "	JOIN Project p ON j.id_project = p.id"
 				+ " JOIN Users u ON u.id = jsu.id_user WHERE j.id = " + id;
 		Connection conn = MySqlConfig.getConnection();
@@ -96,6 +98,7 @@ public class TaskRepository {
 				job.setIdProject(result.getInt("idProject"));
 				job.setNameUser(result.getString("username"));
 				job.setIdUser(result.getInt("idUser"));
+				job.setIdStatus(result.getInt("idStatus"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -112,17 +115,16 @@ public class TaskRepository {
 		return job;
 	}
 
-	public int update(int id, String name, String content, String startDate, String endDate, int idProject, int idUser,
+	public boolean update(int id, String name, String content, String startDate, String endDate, int idProject, int idUser,
 			int exIdProject, int exIdUser) {
+		boolean isSuccess = false;
 		String query = "{call sp_updateJob(" + id + ", '" + name + "', '" + content + "', '" + startDate + "', '"
 				+ endDate + "', " + idProject + ", " + idUser + ", " + exIdProject + ", " + exIdUser + ")}";
 		Connection conn = MySqlConfig.getConnection();
-		int count = 0;
 
 		try {
-			PreparedStatement statement = conn.prepareStatement(query);
-			count = statement.executeUpdate();
-			System.out.println(count);
+			PreparedStatement statement = conn.prepareCall(query);
+			isSuccess = statement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Lỗi cập nhật job " + e.getLocalizedMessage());
@@ -135,18 +137,18 @@ public class TaskRepository {
 			}
 		}
 
-		return count;
+		return isSuccess;
 	}
 
-	public int deleteById(int id, int idProject, int idUser) {
-		String query = "{call sp_updateJob(" + id + ", " + idProject + ", " + idUser + ")}";
+	public boolean deleteById(int id, int idStatus, int idUser) {
+		String query = "{call sp_deleteJob(" + id + ", " + idStatus + ", "+ idUser + ")}";
 		Connection conn = MySqlConfig.getConnection();
-		int count = 0;
+		boolean isSuccess = false;
 
 		try {
-			PreparedStatement statement = conn.prepareStatement(query);
-			count = statement.executeUpdate();
-			System.out.println(count);
+			PreparedStatement statement = conn.prepareCall(query);
+			isSuccess = statement.execute();
+			System.out.println(isSuccess);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Lỗi xóa job " + e.getLocalizedMessage());
@@ -159,12 +161,12 @@ public class TaskRepository {
 			}
 		}
 
-		return count;
+		return isSuccess;
 	}
 
 	public List<Job> selectByIdUser(int id) {
 		String query = "SELECT j.id, j.name, p.id AS idProject, p.name AS nameProject, j.startDate, j.endDate, s.id AS idStatus, s.name AS status FROM Job j"
-				+ "	JOIN Job_Status_Users jsu ON jsu.id_user ="+ id +" AND j.id = jsu.id_job"
+				+ "	JOIN Job_Status_Users jsu ON jsu.id_user =" + id + " AND j.id = jsu.id_job"
 				+ "	JOIN Project p ON p.id = j.id_project" + "	JOIN Status s ON s.id = jsu.id_status";
 		Connection conn = MySqlConfig.getConnection();
 		List<Job> jobs = new ArrayList<>();
@@ -181,6 +183,7 @@ public class TaskRepository {
 				job.setEndDate(resultSet.getDate("endDate"));
 				job.setNameProject(resultSet.getString("nameProject"));
 				job.setStatus(resultSet.getString("status"));
+				job.setIdStatus(resultSet.getInt("idStatus"));
 
 				jobs.add(job);
 			}
@@ -196,6 +199,41 @@ public class TaskRepository {
 			}
 		}
 
+		return jobs;
+	}
+
+	public List<Job> findByIdUserAndIdStatus(int idUser, int idStatus) {
+		String query = "SELECT * FROM Job j JOIN Job_Status_Users jsu ON j.id = jsu.id_job AND jsu.id_status = "
+				+ idStatus + " AND jsu.id_user = " + idUser;
+		Connection conn = MySqlConfig.getConnection();
+		List<Job> jobs = new ArrayList<>();
+		
+		try {
+			PreparedStatement statement = conn.prepareStatement(query);
+			ResultSet result = statement.executeQuery(query);
+			
+			while (result.next()) {
+				Job job = new Job();
+				job.setId(result.getInt("id"));
+				job.setName(result.getString("name"));
+				job.setStartDate(result.getDate("startDate"));
+				job.setEndDate(result.getDate("endDate"));
+				job.setContent(result.getString("content"));
+				
+				jobs.add(job);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Lỗi lấy danh sách job " + e.getLocalizedMessage());
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		return jobs;
 	}
 }

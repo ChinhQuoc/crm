@@ -33,6 +33,8 @@ public class LoginController extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session = req.getSession();
+		session.invalidate();
 		req.getRequestDispatcher("login.jsp").forward(req, resp);
 	}
 	
@@ -45,8 +47,8 @@ public class LoginController extends HttpServlet{
 		
 		if (users.size() > 0) {
 			HttpSession session = req.getSession();
-			session.setAttribute("account", users.get(0));
 			// user tồn tại, login thành công
+			session.setAttribute("LOGIN_USER", users.get(0));
 			
 			String path = req.getRequestURL().toString();
 			resp.sendRedirect(path.replaceAll("/login", ""));
