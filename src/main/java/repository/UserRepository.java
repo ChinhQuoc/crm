@@ -130,7 +130,8 @@ public class UserRepository {
 	}
 
 	public User findById(int id) {
-		String query = "SELECT * FROM Users WHERE id = " + id;
+		String query = "SELECT u.id, u.email, u.fullName, u.image, u.pwd, u.phone, u.id_role, u.firstName, u.lastName, u.userName, r.name as roleName"
+				+ " FROM Users u JOIN `Role` r ON u.id = " + id + " AND r.id = u.id_role";
 		Connection conn = MySqlConfig.getConnection();
 		User user = new User();
 
@@ -149,6 +150,7 @@ public class UserRepository {
 				user.setFirstName(result.getString("firstName"));
 				user.setLastName(result.getString("lastName"));
 				user.setUserName(result.getString("userName"));
+				user.setRoleName(result.getString("roleName"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

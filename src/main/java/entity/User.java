@@ -19,6 +19,7 @@ public class User {
 	private List<Job> hasntStartedJobs;
 	private List<Job> startingJobs;
 	private List<Job> startedJobs;
+	private String roleName;
 	
 	public String getFullName() {
 		return fullName;
@@ -103,5 +104,11 @@ public class User {
 	}
 	public void setStartedJobs(List<Job> startedJobs) {
 		this.startedJobs = startedJobs;
+	}
+	public String getRoleName() {
+		return roleName;
+	}
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
 }
